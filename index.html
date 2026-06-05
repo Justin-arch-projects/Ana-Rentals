@@ -2,2274 +2,594 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nena Casa — Property Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a1628">
+<title>Ana Rentals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #F6F4EF;
-  --bg2: #FFFFFF;
-  --bg3: #EFEBE3;
-  --bg4: #E5DFD3;
-  --t1: #1B1F1D;
-  --t2: #5E6562;
-  --t3: #9CA29F;
-  --line: rgba(27,31,29,0.06);
-  --line2: rgba(27,31,29,0.12);
-  --primary: #2D6B5A;
-  --primary-soft: rgba(45,107,90,0.10);
-  --primary-deep: #1F4D3F;
-  --primary-tint: #E8F1ED;
-  --accent: #D88656;
-  --accent-soft: rgba(216,134,86,0.14);
-  --gold: #C7A769;
-  --gold-soft: rgba(199,167,105,0.15);
-  --ocean: #6E9CC2;
-  --ocean-soft: rgba(110,156,194,0.14);
-  --ok: #5B9C7A;
-  --ok-soft: rgba(91,156,122,0.14);
-  --warn: #D9A24A;
-  --warn-soft: rgba(217,162,74,0.14);
-  --danger: #C76A56;
-  --danger-soft: rgba(199,106,86,0.12);
+  :root {
+    --bg: #0a1628;
+    --bg2: #111e35;
+    --bg3: #1a2d4a;
+    --surface: #162240;
+    --surface2: #1e2f50;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #e8eef8;
+    --text2: #8fa3c0;
+    --text3: #4d6480;
+    --green: #2dd4a0;
+    --green-dim: rgba(45,212,160,0.12);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.12);
+    --red: #f05252;
+    --red-dim: rgba(240,82,82,0.12);
+    --blue: #4f9cf9;
+    --blue-dim: rgba(79,156,249,0.12);
+    --purple: #a78bfa;
+    --c1: #2dd4a0;
+    --c2: #4f9cf9;
+    --c3: #a78bfa;
+    --c4: #f5a623;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow: hidden; overscroll-behavior: none; }
 
-  --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --serif: 'Plus Jakarta Sans', sans-serif;
-  --mono: 'Plus Jakarta Sans', sans-serif;
+  .app { display: flex; flex-direction: column; height: 100vh; height: 100dvh; max-width: 480px; margin: 0 auto; position: relative; }
 
-  --r-sm: 8px;
-  --r: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
-  --pad: 24px;
-  --pad-lg: 40px;
+  /* Header */
+  .header { flex-shrink: 0; padding: max(20px, env(safe-area-inset-top)) 20px 16px; background: linear-gradient(180deg, var(--bg) 60%, transparent); }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--text); letter-spacing: -0.5px; }
+  .header-sub { font-size: 12px; color: var(--text3); margin-top: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .header-badge { background: var(--green-dim); color: var(--green); font-size: 11px; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(45,212,160,0.2); font-weight: 500; }
 
-  --shadow-sm: 0 1px 2px rgba(27,31,29,0.04), 0 1px 1px rgba(27,31,29,0.03);
-  --shadow: 0 1px 2px rgba(27,31,29,0.04), 0 8px 24px rgba(27,31,29,0.05);
-  --shadow-lg: 0 2px 4px rgba(27,31,29,0.04), 0 16px 40px rgba(27,31,29,0.08);
-}
+  /* Scroll content */
+  .content { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 0 16px calc(96px + env(safe-area-inset-bottom)); }
+  .content::-webkit-scrollbar { display: none; }
 
-/* Coastal theme */
-[data-theme="coastal"] { --primary: #25577A; --primary-deep: #173B55; --accent: #D08A4F; }
-/* Editorial theme */
-[data-theme="editorial"] { --primary: #1A1814; --primary-deep: #000; --accent: #8C3A2A; }
-/* Olive theme */
-[data-theme="olive"] { --primary: #4A5934; --accent: #B86A3A; }
+  /* Sections */
+  .section { display: none; }
+  .section.active { display: block; }
 
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--t1);
-  font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
-  height: 100vh;
-}
-button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; }
-input, select, textarea { font: inherit; color: inherit; }
-a { color: inherit; }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(27,31,29,0.10); border-radius: 8px; border: 2px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: rgba(27,31,29,0.20); }
+  /* Profit hero */
+  .profit-hero { background: linear-gradient(135deg, var(--surface) 0%, var(--bg2) 100%); border: 1px solid var(--border); border-radius: 18px; padding: 18px 18px 16px; margin-bottom: 12px; position: relative; overflow: hidden; }
+  .profit-hero::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--green); }
+  .ph-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .ph-val { font-family: 'DM Serif Display', serif; font-size: 40px; color: var(--green); line-height: 1; margin: 8px 0 8px; letter-spacing: -0.5px; }
+  .ph-sub { font-size: 11px; color: var(--text2); }
+  .pl { margin-top: 14px; padding-top: 4px; border-top: 1px solid var(--border); }
+  .pl-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; }
+  .pl-row.income { border-bottom: 1px solid var(--border); margin-bottom: 5px; padding-bottom: 9px; }
+  .pl-row .lbl { font-size: 12.5px; color: var(--text2); }
+  .pl-row .amt { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pl-row .amt.pos { color: var(--text); }
+  .pl-row .amt.neg { color: var(--red); }
+  .pl-cat { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin: 10px 0 2px; }
 
-/* Loading splash */
-#splash { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; z-index: 1000; }
-#splash .mark { font-family: var(--sans); font-weight: 700; font-size: 36px; color: var(--primary); letter-spacing: -0.5px; }
-#splash .lbl { font-family: var(--sans); font-size: 11px; color: var(--t3); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+  /* Summary cards */
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .sum-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px; }
+  .sum-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+  .sum-val { font-size: 24px; font-weight: 600; color: var(--text); line-height: 1; }
+  .sum-sub { font-size: 10px; color: var(--text3); margin-top: 5px; }
+  .sum-val.green { color: var(--green); }
+  .sum-val.red { color: var(--red); }
 
-#root { height: 100vh; overflow: hidden; }
+  /* Bank fee strip */
+  .bankfee-strip { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 20px; }
+  .bf-left { display: flex; align-items: center; gap: 11px; }
+  .bf-icon { width: 32px; height: 32px; border-radius: 9px; background: var(--blue-dim); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; }
+  .bf-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .bf-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .bf-amt { font-size: 17px; font-weight: 600; color: var(--text); }
+
+  /* Section label */
+  .sec-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px; font-weight: 500; }
+
+  /* Property cards */
+  .prop-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; position: relative; overflow: hidden; }
+  .prop-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 3px 0 0 3px; }
+  .prop-card.c1::before { background: var(--c1); }
+  .prop-card.c2::before { background: var(--c2); }
+  .prop-card.c3::before { background: var(--c3); }
+  .prop-card.c4::before { background: var(--c4); }
+  .prop-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .prop-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .prop-owner { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .prop-badge { font-size: 10px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(45,212,160,0.2); }
+  .badge-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
+  .prop-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .prop-stat { background: var(--bg3); border-radius: 10px; padding: 8px 10px; }
+  .ps-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+  .ps-val { font-size: 15px; font-weight: 500; color: var(--text); }
+  .prop-profit { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--border); }
+  .pp-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.6px; }
+  .pp-val { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pp-val.green { color: var(--green); }
+  .pp-val.red { color: var(--red); }
+
+  /* Bar chart */
+  .bar-chart { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 10px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-month { font-size: 11px; color: var(--text3); width: 44px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 22px; background: var(--bg3); border-radius: 6px; overflow: hidden; display: flex; }
+  .bar-seg { height: 100%; }
+  .bar-total { font-size: 11px; color: var(--text2); width: 48px; text-align: right; flex-shrink: 0; }
+
+  /* Expense list */
+  .exp-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
+  .exp-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 8px; }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-note { font-size: 13px; color: var(--text); line-height: 1.3; }
+  .exp-meta { font-size: 10px; color: var(--text3); margin-top: 3px; }
+  .exp-amt { font-size: 13px; font-weight: 500; color: var(--red); flex-shrink: 0; }
+  .exp-total { display: flex; justify-content: space-between; padding: 12px 16px; background: var(--bg3); }
+  .exp-total-label { font-size: 12px; font-weight: 500; color: var(--text2); }
+  .exp-total-val { font-size: 13px; font-weight: 600; color: var(--red); }
+
+  /* Bank fee detail */
+  .bf-detail { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
+  .bf-detail-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--bg3); }
+  .bf-detail-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .bf-detail-sub { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .bf-detail-rate { font-size: 20px; font-weight: 600; color: var(--blue); }
+  .bf-detail-rate span { font-size: 11px; color: var(--text3); font-weight: 400; margin-left: 1px; }
+  .bf-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+  .bf-row:last-child { border-bottom: none; }
+  .bf-row.total { background: var(--bg3); }
+  .bf-row .m { font-size: 12px; color: var(--text2); }
+  .bf-row.total .m { font-weight: 500; color: var(--text2); }
+  .bf-row .a { font-size: 12px; color: var(--text); font-weight: 500; }
+  .bf-row.total .a { color: var(--blue); font-weight: 600; }
+
+  /* HOA */
+  .hoa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .hoa-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px; }
+  .hoa-name { font-size: 11px; color: var(--text3); margin-bottom: 6px; line-height: 1.3; }
+  .hoa-val { font-size: 20px; font-weight: 600; color: var(--green); }
+  .hoa-detail { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .hoa-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); }
+  .hoa-row:last-child { border-bottom: none; }
+  .hoa-month { font-size: 12px; color: var(--text2); }
+  .hoa-units { font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .hoa-total { font-size: 13px; font-weight: 500; color: var(--text); }
+
+  /* Tasks */
+  .task-add { display: flex; gap: 8px; margin-bottom: 14px; }
+  .task-input { flex: 1; background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 10px 14px; font-size: 13px; color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; }
+  .task-input::placeholder { color: var(--text3); }
+  .task-input:focus { border-color: rgba(79,156,249,0.4); }
+  .task-sel { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 10px 8px; font-size: 11px; color: var(--text2); font-family: 'DM Sans', sans-serif; outline: none; }
+  .task-add-btn { background: var(--blue-dim); border: 1px solid rgba(79,156,249,0.3); border-radius: 12px; padding: 10px 14px; font-size: 18px; color: var(--blue); cursor: pointer; }
+  .filter-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 12px; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .chip { padding: 5px 12px; border: 1px solid var(--border); border-radius: 20px; font-size: 11px; cursor: pointer; background: transparent; color: var(--text3); white-space: nowrap; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+  .chip.active { background: var(--surface2); border-color: var(--border2); color: var(--text); }
+  .task-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .task-item:last-child { border-bottom: none; }
+  .task-check { width: 20px; height: 20px; border: 1.5px solid var(--border2); border-radius: 6px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .task-check.done { background: var(--green); border-color: var(--green); }
+  .task-check.done::after { content: ''; display: block; width: 5px; height: 9px; border: 2px solid #0a1628; border-top: none; border-left: none; transform: rotate(45deg) translate(-1px,-1px); }
+  .task-title { font-size: 13px; color: var(--text); line-height: 1.4; }
+  .task-title.done { text-decoration: line-through; color: var(--text3); }
+  .task-meta { font-size: 10px; color: var(--text3); margin-top: 3px; }
+  .task-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; border: 1px solid var(--border); color: var(--text3); display: inline-block; margin-top: 5px; }
+  .pdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .p-h { background: var(--red); }
+  .p-m { background: var(--amber); }
+  .p-l { background: var(--green); }
+  .empty { text-align: center; padding: 32px 16px; color: var(--text3); font-size: 13px; }
+
+  /* Bottom nav */
+  .nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: rgba(10,22,40,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; padding: 8px 0 calc(8px + env(safe-area-inset-bottom)); }
+  .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; background: none; border: none; cursor: pointer; color: var(--text3); font-family: 'DM Sans', sans-serif; }
+  .nav-btn.active { color: var(--blue); }
+  .nav-icon { font-size: 20px; line-height: 1; }
+  .nav-label { font-size: 10px; letter-spacing: 0.2px; }
+
+  /* Animations */
+  .section.active { animation: fadeUp 0.2s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
-<div id="splash">
-  <div class="mark">Nena Casa</div>
-  <div class="lbl">Loading…</div>
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <div class="header-title">Costa Rica Rentals</div>
+        <div class="header-sub">4 properties · Costa Rica</div>
+      </div>
+      <div class="header-badge">Jun 2026</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div id="s-overview" class="section active">
+      <div class="profit-hero">
+        <div class="ph-label">Total profit · Year to date</div>
+        <div class="ph-val" id="ph-val">$0</div>
+        <div class="ph-sub">Oct 2025 – Jun 2026 · after every cost</div>
+        <div class="pl">
+          <div class="pl-row income"><span class="lbl">Rent collected</span><span class="amt pos" id="ph-rent">$0</span></div>
+          <div class="pl-row"><span class="lbl">Ricardo (legal)</span><span class="amt neg" id="ph-ricardo">$0</span></div>
+          <div class="pl-row"><span class="lbl">HOA maintenance</span><span class="amt neg" id="ph-hoa">$0</span></div>
+          <div class="pl-row"><span class="lbl">Property taxes</span><span class="amt neg" id="ph-tax">$0</span></div>
+          <div class="pl-row"><span class="lbl">Repairs</span><span class="amt neg" id="ph-repair">$0</span></div>
+          <div class="pl-row"><span class="lbl">Legal — will (Salas)</span><span class="amt neg" id="ph-legal">$0</span></div>
+          <div class="pl-row"><span class="lbl">Digital signatures</span><span class="amt neg" id="ph-sig">$0</span></div>
+          <div class="pl-row"><span class="lbl">Piki — viáticos</span><span class="amt neg" id="ph-viat">$0</span></div>
+          <div class="pl-row"><span class="lbl">Other</span><span class="amt neg" id="ph-other">$0</span></div>
+          <div class="pl-row"><span class="lbl">Bank fees</span><span class="amt neg" id="ph-bank">$0</span></div>
+        </div>
+      </div>
+
+      <div class="sec-label">Properties</div>
+      <div id="prop-cards"></div>
+    </div>
+
+    <!-- FINANCES -->
+    <div id="s-finances" class="section">
+      <div class="sec-label">Monthly rent (Oct 2025 – Apr 2026)</div>
+      <div class="bar-chart" id="bar-chart"></div>
+
+      <div class="sec-label">Expense log</div>
+      <div class="exp-list" id="exp-list"></div>
+
+      <div class="sec-label">Bank fees</div>
+      <div class="bf-detail">
+        <div class="bf-detail-head">
+          <div>
+            <div class="bf-detail-title">Monthly account fee</div>
+            <div class="bf-detail-sub">Flat charge, every month</div>
+          </div>
+          <div class="bf-detail-rate">$7.25<span>/mo</span></div>
+        </div>
+        <div id="bf-list"></div>
+      </div>
+    </div>
+
+    <!-- HOA -->
+    <div id="s-hoa" class="section">
+      <div class="sec-label">Total HOA paid per LLC</div>
+      <div class="hoa-grid">
+        <div class="hoa-card"><div class="hoa-name">MF Manfredonia S.A</div><div class="hoa-val">$4,343</div></div>
+        <div class="hoa-card"><div class="hoa-name">Espada de Fuego S.A</div><div class="hoa-val">$4,913</div></div>
+        <div class="hoa-card"><div class="hoa-name">MJ Montijo INT S.A</div><div class="hoa-val">$4,848</div></div>
+        <div class="hoa-card"><div class="hoa-name">Comercial IB Antioco</div><div class="hoa-val">$4,407</div></div>
+      </div>
+
+      <div class="sec-label">Monthly detail</div>
+      <div class="hoa-detail" id="hoa-detail"></div>
+
+      <div class="sec-label" style="margin-top:16px">Ricardo — legal</div>
+      <div class="exp-list" id="assess-list"></div>
+    </div>
+
+    <!-- TASKS -->
+    <div id="s-tasks" class="section">
+      <div class="task-add">
+        <input id="ti" class="task-input" type="text" placeholder="Add a task…" />
+        <select id="tp" class="task-sel">
+          <option value="0">MF</option>
+          <option value="1">Espada</option>
+          <option value="2">Montijo</option>
+          <option value="3">Comercial</option>
+          <option value="4">All</option>
+        </select>
+        <button class="task-add-btn" onclick="addTask()">+</button>
+      </div>
+      <div class="filter-row">
+        <button class="chip active" onclick="filterTasks('all',this)">All</button>
+        <button class="chip" onclick="filterTasks('0',this)">MF Manfredonia</button>
+        <button class="chip" onclick="filterTasks('1',this)">Espada de Fuego</button>
+        <button class="chip" onclick="filterTasks('2',this)">MJ Montijo</button>
+        <button class="chip" onclick="filterTasks('3',this)">Comercial IB</button>
+        <button class="chip" onclick="filterTasks('done',this)">Done</button>
+      </div>
+      <div class="task-list" id="task-list"></div>
+    </div>
+
+  </div><!-- /content -->
+
+  <nav class="nav">
+    <button class="nav-btn active" onclick="switchTab('overview',this)">
+      <span class="nav-icon">⌂</span>
+      <span class="nav-label">Overview</span>
+    </button>
+    <button class="nav-btn" onclick="switchTab('finances',this)">
+      <span class="nav-icon">$</span>
+      <span class="nav-label">Finances</span>
+    </button>
+    <button class="nav-btn" onclick="switchTab('hoa',this)">
+      <span class="nav-icon">🏢</span>
+      <span class="nav-label">HOA</span>
+    </button>
+    <button class="nav-btn" onclick="switchTab('tasks',this)">
+      <span class="nav-icon">✓</span>
+      <span class="nav-label">Tasks</span>
+    </button>
+  </nav>
 </div>
 
-<div id="root"></div>
-
-<template id="__bundler_thumbnail">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-    <rect width="100" height="100" fill="#F4EFE6"/>
-    <text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="34" fill="#1F4D3F">CA</text>
-  </svg>
-</template>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-
 <script>
-// Nena Casa — real data from balance sheet (Apr 25, 2026)
-// 4 condos in Costa Rica, each held in its own S.A. LLC.
-// Managed by Piki (Manfredonia, Espada de Fuego) and Nena (Montijo, Antioco).
-window.CASA_ANA_DATA = (() => {
-  const MONTHS = [
-    "Oct-25","Nov-25","Dec-25","Jan-26","Feb-26","Mar-26","Apr-26","May-26",
-    "Jun-26","Jul-26","Aug-26","Sep-26","Oct-26","Nov-26","Dec-26"
-  ];
+const propNames = ['MF Manfredonia S.A','Espada de Fuego S.A','MJ Montijo INT S.A','Comercial IB Antioco','All'];
+const propColors = ['#2dd4a0','#4f9cf9','#a78bfa','#f5a623'];
+const months = ['Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26'];
+const rentData = [
+  [1500,1650,1450,0],
+  [1500,1650,1450,1500],
+  [1500,1650,1450,1500],
+  [1500,1650,1450,1400],
+  [1500,1650,1450,1000],
+  [1500,1650,1450,1500],
+  [1500,1650,1400,1500],
+  [0,0,1400,1500],
+  [0,0,1450,1500],
+];
+const hoaData = [
+  [447,515,515,447],
+  [445,516,516,445],
+  [458,531,531,458],
+  [450,521,521,450],
+  [455,527,527,455],
+  [473,548,548,473],
+  [483,558,558,482.53],
+  [568,600,568,600],
+  [563.88,596.92,563.88,596.92],
+];
+const bankFees = [
+  {m:'Oct 2025',a:7.25},{m:'Nov 2025',a:7.25},{m:'Dec 2025',a:7.25},
+  {m:'Jan 2026',a:7.25},{m:'Feb 2026',a:7.25},{m:'Mar 2026',a:7.25},
+  {m:'Apr 2026',a:7.25},{m:'May 2026',a:7.25},{m:'Jun 2026',a:7.25},
+];
+const assessments = [
+  {note:'Ricardo — all 4 units', date:'Mar 2026', amt:15000},
+  {note:'Ricardo — all 4 units', date:'Apr 2026', amt:3125},
+  {note:'Ricardo — all 4 units', date:'May 2026', amt:3125},
+];
+const propMeta = [
+  {name:'MF Manfredonia S.A', owner:'Piki', c:'c1', badgeTxt:'May–Jun gap', badgeCls:'badge-warn'},
+  {name:'Espada de Fuego S.A', owner:'Piki', c:'c2', badgeTxt:'May–Jun gap', badgeCls:'badge-warn'},
+  {name:'MJ Montijo INT S.A', owner:'Nena', c:'c3', badgeTxt:'Current', badgeCls:'badge-ok'},
+  {name:'Comercial IB Antioco', owner:'Nena', c:'c4', badgeTxt:'Current', badgeCls:'badge-ok'},
+];
+const expenses = [
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:20,date:'Jun 2026'},
+  {note:'Electrical repair',llc:'Comercial IB Antioco',amt:112,date:'May 2026'},
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:100,date:'May 2026'},
+  {note:'Digital signature — Nena',llc:'MJ Montijo INT S.A',amt:84.93,date:'Apr 4 2026'},
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:100,date:'Apr 14 2026'},
+  {note:'Bathroom leak repair',llc:'Espada de Fuego S.A',amt:155.38,date:'Apr 19 2026'},
+  {note:'Legal fees — Will (Guillermo Salas)',llc:'Espada de Fuego S.A',amt:300,date:'Apr 21 2026'},
+  {note:'Digital signature — Piki',llc:'Espada de Fuego S.A',amt:90,date:'Mar 2026'},
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:50,date:'Mar 19 2026'},
+  {note:'LLC taxes yearly — all 4',llc:'All properties',amt:1075,date:'Mar 12 2026'},
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:55,date:'Feb 21 2026'},
+  {note:'Toilet repair',llc:'MJ Montijo INT S.A',amt:291,date:'Feb 14 2026'},
+  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:50,date:'Jan 23 2026'},
+  {note:'Municipality taxes — all 4',llc:'All properties',amt:850,date:'Jan 22 2026'},
+  {note:'Unknown — need to look up',llc:'Espada de Fuego S.A',amt:80.97,date:'Jul 2026?'},
+];
 
-  const properties = [
-    {
-      id: "manfredonia",
-      name: "Manfredonia",
-      llc: "MF Manfredonia S.A",
-      manager: "Piki",
-      status: "for-sale",
-      hue: 168,
-      // Index aligns with MONTHS; null = not yet
-      rent: [1500,1500,1500,1500,1500,1500,1500,0,null,null,null,null,null,null,null],
-      hoa:  [447,445,458,450,455,473,483,568,null,null,null,null,null,null,null],
-      comps: {
-        rent: [
-          { name: "Casa Bromelia",      rent: 1400, beds: 2, note: "2 blocks away · similar layout" },
-          { name: "Villa Sol Naciente", rent: 1600, beds: 2, note: "Same complex · pool view" },
-        ],
-        sale: [
-          { name: "Casa Bromelia",   price: 295000, beds: 2, note: "Listed 38 days · similar layout" },
-          { name: "Mirador Unit 4B", price: 335000, beds: 2, note: "Sold last month · corner unit" },
-        ],
-      },
-      est: 315000,
-    },
-    {
-      id: "espada",
-      name: "Espada de Fuego",
-      llc: "Espada de Fuego S.A",
-      manager: "Piki",
-      status: "rented",
-      hue: 28,
-      rent: [1650,1650,1650,1650,1650,1650,1650,0,null,null,null,null,null,null,null],
-      hoa:  [515,516,531,521,527,548,558,600,null,null,null,null,null,null,null],
-      comps: {
-        rent: [
-          { name: "Mirador del Río", rent: 1750, beds: 3, note: "Up the hill · partial view" },
-          { name: "Casa Coral",      rent: 1500, beds: 2, note: "Across the road · smaller" },
-        ],
-        sale: [
-          { name: "Vista del Río 12", price: 385000, beds: 3, note: "Listed 22 days · full view" },
-          { name: "Casa Coral 2B",    price: 345000, beds: 3, note: "Sold Mar 26 · smaller lot" },
-        ],
-      },
-      est: 365000,
-    },
-    {
-      id: "montijo",
-      name: "Montijo",
-      llc: "MJ Montijo INT S.A",
-      manager: "Nena",
-      status: "rented",
-      hue: 92,
-      rent: [1450,1450,1450,1450,1450,1450,1450,1400,null,null,null,null,null,null,null],
-      hoa:  [515,516,531,521,527,548,558,568,null,null,null,null,null,null,null],
-      comps: {
-        rent: [
-          { name: "Quinta Esperanza", rent: 1350, beds: 2, note: "Same street · furnished" },
-          { name: "Casa Verde",       rent: 1550, beds: 3, note: "3 doors down · larger lot" },
-        ],
-        sale: [
-          { name: "Quinta Esperanza", price: 280000, beds: 2, note: "Listed 51 days · needs paint" },
-          { name: "Casa Verde",       price: 310000, beds: 3, note: "Sold Feb 26 · larger" },
-        ],
-      },
-      est: 295000,
-    },
-    {
-      id: "antioco",
-      name: "Antioco",
-      llc: "Comercial IB Antioco",
-      manager: "Nena",
-      status: "for-sale",
-      hue: 210,
-      rent: [0,1500,1500,1400,1000,1500,1500,1500,null,null,null,null,null,null,null],
-      hoa:  [447,445,458,null,455,473,483,600,null,null,null,null,null,null,null],
-      comps: {
-        rent: [
-          { name: "Villa Brisa",       rent: 1450, beds: 2, note: "Same building · just leased" },
-          { name: "Hacienda Pequeña", rent: 1600, beds: 3, note: "Two streets over · newer reno" },
-        ],
-        sale: [
-          { name: "Villa Brisa 3C",     price: 290000, beds: 2, note: "Listed 14 days · same line" },
-          { name: "Hacienda Pequeña",  price: 325000, beds: 3, note: "Sold Apr 26 · renovated" },
-        ],
-      },
-      est: 305000,
-    },
-  ];
+let tasks = [
+  {id:1,title:'Confirm MF Manfredonia May–Jun rent — showing $0',prop:0,priority:'high',done:false,date:'Pending'},
+  {id:2,title:'Confirm Espada de Fuego May–Jun rent — showing $0',prop:1,priority:'high',done:false,date:'Pending'},
+  {id:3,title:'Look up unknown $80.97 expense (Espada)',prop:1,priority:'high',done:false,date:'Pending'},
+  {id:4,title:'Verify Comercial IB Feb rent gap — $500 short',prop:3,priority:'med',done:false,date:'Pending'},
+  {id:5,title:'Confirm Jun HOA payments sent — all 4 units',prop:4,priority:'med',done:false,date:'Jul 2026'},
+  {id:6,title:'File yearly LLC tax receipts',prop:4,priority:'low',done:true,date:'Mar 12 done'},
+];
+let nextId = 7, taskFilter = 'all';
 
-  // ─── Expenses (one-offs) — month + amount per property + note ───
-  // Keys: manfredonia | espada | montijo | antioco
-  const expenses = [
-    { month: "Jan-26", cat: "Municipality Tax", manfredonia: 212.50, espada: 212.50, montijo: 212.50, antioco: 212.50, note: "Municipality Taxes Jan 22 2026" },
-    { month: "Mar-26", cat: "LLC Tax (Yearly)", manfredonia: 268.75, espada: 268.75, montijo: 268.75, antioco: 268.75, note: "Taxes on LLCs — Yearly Mar 12" },
-    { month: "Mar-26", cat: "Admin", manfredonia: 0, espada: 90.00,  montijo: 0, antioco: 0, note: "Digital signature — Piki Mar 2026" },
-    { month: "Apr-26", cat: "Repairs", manfredonia: 0, espada: 0, montijo: 291.00, antioco: 0, note: "Toilet repair Feb 14 2026" },
-    { month: "Apr-26", cat: "Admin", manfredonia: 0, espada: 0, montijo: 84.93, antioco: 0, note: "Digital signature — Nena Apr 4 2026" },
-    { month: "Apr-26", cat: "Legal", manfredonia: 0, espada: 300.00, montijo: 0, antioco: 0, note: "Legal fees — Will (Guillermo Salas) Apr 21" },
-    { month: "Apr-26", cat: "Repairs", manfredonia: 0, espada: 155.38, montijo: 0, antioco: 0, note: "Bathroom leak repair Apr 19 2026" },
-    { month: "May-26", cat: "Repairs", manfredonia: 0, espada: 0, montijo: 0, antioco: 112.00, note: "Electrical repair" },
-    { month: "Jul-26", cat: "Unknown", manfredonia: 0, espada: 80.97, montijo: 0, antioco: 0, note: "Need to look up" },
-  ];
-
-  // ─── Piki Funds — viáticos and similar ──────────────────────────
-  const pikiFunds = [
-    { month: "Jan-26", manfredonia: 0, espada: 50.00,  montijo: 0, antioco: 0, note: "Piki — Viáticos Jan 23 2026" },
-    { month: "Feb-26", manfredonia: 0, espada: 55.00,  montijo: 0, antioco: 0, note: "Piki — Viáticos Feb 21 2026" },
-    { month: "Mar-26", manfredonia: 0, espada: 50.00,  montijo: 0, antioco: 0, note: "Piki — Viáticos Mar 19 2026" },
-    { month: "Apr-26", manfredonia: 0, espada: 100.00, montijo: 0, antioco: 0, note: "Piki — Viáticos Apr 14 2026" },
-    { month: "Apr-26", manfredonia: 0, espada: 300.00, montijo: 0, antioco: 0, note: "Piki — Legal fees, Will (Guillermo Salas) Apr 21" },
-    { month: "May-26", manfredonia: 0, espada: 100.00, montijo: 0, antioco: 0, note: "Piki — Viáticos May 2026" },
-  ];
-
-  // ─── Ricardo — lawyer, monthly retainer (some months skipped) ──
-  // Per property × per month. If skip=true, we don't pay him that month.
-  const ricardo = {
-    manfredonia: [
-      { month: "Mar-26", amt: 3750 },
-      { month: "Apr-26", amt: 781.25 },
-      { month: "May-26", amt: 0, skip: true, note: "Not paying in May" },
-    ],
-    espada: [
-      { month: "Mar-26", amt: 3750 },
-      { month: "Apr-26", amt: 781.25 },
-      { month: "May-26", amt: 0, skip: true, note: "Not paying in May" },
-    ],
-    montijo: [
-      { month: "Mar-26", amt: 3750 },
-      { month: "Apr-26", amt: 781.25 },
-      { month: "May-26", amt: 0, skip: true, note: "Not paying in May" },
-    ],
-    antioco: [
-      { month: "Mar-26", amt: 3750 },
-      { month: "Apr-26", amt: 781.25 },
-      { month: "May-26", amt: 0, skip: true, note: "Not paying in May" },
-    ],
-  };
-
-  // ─── Bank fee note (header only — $7.25 monthly) ────────────────
-  const bankFee = 7.25;
-
-  // ─── Contacts ───────────────────────────────────────────────────
-  const contacts = [
-    {
-      id: "lawyer",
-      role: "Lawyer",
-      name: "Ricardo",
-      firm: "Legal — monthly retainer",
-      phone: "+506 2222 1188",
-      email: "ricardo@legal.cr",
-      hue: 28,
-      questions: [],
-    },
-    {
-      id: "accountant",
-      role: "Accountant",
-      name: "Marisol Rojas",
-      firm: "Rojas Contabilidad",
-      phone: "+506 2233 4477",
-      email: "marisol@rojascontab.cr",
-      hue: 168,
-      questions: [],
-    },
-    {
-      id: "agent",
-      role: "Real Estate Agent",
-      name: "Maria Gabriela",
-      firm: "Costa Realty Group",
-      phone: "+506 8844 7200",
-      email: "maria.gabriela@costarealty.cr",
-      hue: 92,
-      questions: [],
-    },
-    {
-      id: "managers",
-      role: "Property Managers",
-      name: "Piki & Nena",
-      firm: "On the ground",
-      phone: "—",
-      email: "via WhatsApp",
-      hue: 210,
-      questions: [],
-    },
-  ];
-
-  return { properties, months: MONTHS, expenses, pikiFunds, ricardo, bankFee, contacts };
-})();
-
-</script>
-<script type="text/babel" data-presets="env,react">
-// Casa Ana — shared UI parts
-const { useState, useEffect, useRef, useMemo } = React;
-
-// ---- Currency helper ----
-function useCurrency(primary = "USD") {
-  // ~520 colones per USD (rough)
-  const FX = 520;
-  return useMemo(() => ({
-    fmt(usd, opts = {}) {
-      const { compact = false, secondary = false } = opts;
-      const n = Number(usd);
-      if (primary === "USD") {
-        const main = compact && Math.abs(n) >= 1000
-          ? "$" + (n / 1000).toFixed(n >= 10000 ? 0 : 1) + "k"
-          : "$" + n.toLocaleString("en-US", { maximumFractionDigits: n % 1 === 0 ? 0 : 2 });
-        if (!secondary) return main;
-        const crc = Math.round(n * FX);
-        return { main, sub: "₡" + crc.toLocaleString("en-US") };
-      } else {
-        const crc = Math.round(n * FX);
-        const main = compact && crc >= 1000000
-          ? "₡" + (crc / 1000000).toFixed(1) + "M"
-          : "₡" + crc.toLocaleString("en-US");
-        if (!secondary) return main;
-        return { main, sub: "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 }) };
-      }
-    },
-  }), [primary]);
+function switchTab(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('s-' + name).classList.add('active');
+  btn.classList.add('active');
 }
 
-// ---- Date helpers ----
-function parseDate(s) {
-  const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d);
-}
-function fmtDate(s, opts = {}) {
-  const dt = parseDate(s);
-  const m = dt.toLocaleString("en-US", { month: "short" });
-  return opts.long
-    ? `${m} ${dt.getDate()}, ${dt.getFullYear()}`
-    : `${m} ${dt.getDate()}`;
-}
-function daysFromNow(s) {
-  const today = new Date(2026, 4, 20); // May 20, 2026 reference
-  const dt = parseDate(s);
-  return Math.round((dt - today) / 86400000);
-}
-function dueLabel(s) {
-  const d = daysFromNow(s);
-  if (d < 0) return { txt: `${Math.abs(d)}d overdue`, kind: "danger" };
-  if (d === 0) return { txt: "Due today", kind: "warn" };
-  if (d === 1) return { txt: "Tomorrow", kind: "warn" };
-  if (d <= 3) return { txt: `In ${d}d`, kind: "warn" };
-  if (d <= 7) return { txt: `In ${d}d`, kind: "muted" };
-  return { txt: fmtDate(s), kind: "muted" };
+function renderBars() {
+  const maxTotal = 6600;
+  document.getElementById('bar-chart').innerHTML = months.map((m, i) => {
+    const row = rentData[i];
+    const total = row.reduce((a,b) => a+b, 0);
+    const segs = row.map((v, j) => {
+      const w = (v / maxTotal * 100).toFixed(1);
+      return `<div class="bar-seg" style="width:${w}%;background:${propColors[j]}44;border-right:1px solid rgba(10,22,40,0.5)"></div>`;
+    }).join('');
+    return `<div class="bar-row">
+      <div class="bar-month">${m}</div>
+      <div class="bar-track">${segs}</div>
+      <div class="bar-total">$${total.toLocaleString()}</div>
+    </div>`;
+  }).join('');
 }
 
-// ---- Pill ----
-function Pill({ children, tone = "muted", solid = false, mono = false }) {
-  const toneMap = {
-    ok:      { bg: "var(--ok-soft)",      fg: "var(--ok)",      bd: "var(--ok)" },
-    warn:    { bg: "var(--warn-soft)",    fg: "var(--warn)",    bd: "var(--warn)" },
-    danger:  { bg: "var(--danger-soft)",  fg: "var(--danger)",  bd: "var(--danger)" },
-    primary: { bg: "var(--primary-soft)", fg: "var(--primary)", bd: "var(--primary)" },
-    accent:  { bg: "var(--accent-soft)",  fg: "var(--accent)",  bd: "var(--accent)" },
-    ocean:   { bg: "var(--ocean-soft)",   fg: "var(--ocean)",   bd: "var(--ocean)" },
-    gold:    { bg: "var(--gold-soft)",    fg: "var(--gold)",    bd: "var(--gold)" },
-    muted:   { bg: "var(--bg3)",          fg: "var(--t2)",      bd: "var(--line2)" },
-  };
-  const c = toneMap[tone] || toneMap.muted;
-  return (
-    <span style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 4,
-      padding: "2px 8px",
-      fontSize: 10,
-      fontFamily: mono ? "var(--mono)" : "var(--sans)",
-      fontWeight: 500,
-      letterSpacing: mono ? 1 : 0.3,
-      textTransform: mono ? "uppercase" : "none",
-      borderRadius: 999,
-      background: solid ? c.fg : c.bg,
-      color: solid ? "#fff" : c.fg,
-      whiteSpace: "nowrap",
-      lineHeight: 1.6,
-    }}>{children}</span>
-  );
+function renderBankFees() {
+  const total = bankFees.reduce((a,f) => a+f.a, 0);
+  document.getElementById('bf-list').innerHTML =
+    bankFees.map(f => `<div class="bf-row"><span class="m">${f.m}</span><span class="a">$${f.a.toFixed(2)}</span></div>`).join('') +
+    `<div class="bf-row total"><span class="m">Total · ${bankFees.length} months</span><span class="a">$${total.toFixed(2)}</span></div>`;
 }
 
-// ---- Property image placeholder ----
-// Striped placeholder tinted by hue. Lets user know "drop photo here" via the label.
-function PropImg({ prop, label, height = 180, rounded = true }) {
-  const h = prop.hue ?? 168;
-  const id = `stripe-${prop.id}`;
-  return (
-    <div style={{
-      position: "relative",
-      width: "100%",
-      height,
-      borderRadius: rounded ? "var(--r-lg)" : 0,
-      overflow: "hidden",
-      background: `oklch(0.82 0.05 ${h})`,
-      border: "0.5px solid var(--line)",
-    }}>
-      <svg width="100%" height="100%" style={{ position: "absolute", inset: 0, opacity: 0.45 }}>
-        <defs>
-          <pattern id={id} patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)">
-            <line x1="0" y1="0" x2="0" y2="14" stroke={`oklch(0.55 0.10 ${h})`} strokeWidth="1.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill={`url(#${id})`} />
-      </svg>
-      <div style={{
-        position: "absolute",
-        left: 10, bottom: 10,
-        fontFamily: "var(--mono)",
-        fontSize: 9,
-        letterSpacing: 1.4,
-        textTransform: "uppercase",
-        color: `oklch(0.30 0.10 ${h})`,
-        background: `oklch(0.95 0.03 ${h} / 0.6)`,
-        padding: "3px 7px",
-        borderRadius: 2,
-      }}>{label || `${prop.name} — photo`}</div>
-    </div>
-  );
+function renderExpenses() {
+  const total = expenses.reduce((a,e) => a+e.amt, 0);
+  document.getElementById('exp-list').innerHTML =
+    expenses.map(e => `<div class="exp-item">
+      <div style="flex:1"><div class="exp-note">${e.note}</div><div class="exp-meta">${e.llc} · ${e.date}</div></div>
+      <div class="exp-amt">-$${e.amt.toFixed(2)}</div>
+    </div>`).join('') +
+    `<div class="exp-total"><span class="exp-total-label">Total</span><span class="exp-total-val">-$${total.toFixed(2)}</span></div>`;
 }
 
-// ---- KPI card ----
-function Kpi({ label, value, sub, sublabel, tone = "primary" }) {
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      border: "0.5px solid var(--line)",
-      borderRadius: "var(--r-lg)",
-      padding: "18px 20px",
-      display: "flex",
-      flexDirection: "column",
-      gap: 4,
-    }}>
-      <div style={{
-        fontFamily: "var(--mono)",
-        fontSize: 10,
-        letterSpacing: 1.4,
-        textTransform: "uppercase",
-        color: "var(--t2)",
-      }}>{label}</div>
-      <div style={{
-        fontFamily: "var(--serif)",
-        fontSize: 38,
-        lineHeight: 1,
-        letterSpacing: -0.5,
-        color: "var(--t1)",
-        marginTop: 4,
-      }}>{value}</div>
-      {sub && (
-        <div style={{
-          fontSize: 12,
-          color: "var(--t2)",
-          marginTop: 6,
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-        }}>
-          {sublabel && <span style={{ fontFamily: "var(--mono)", fontSize: 9, letterSpacing: 1, textTransform: "uppercase", color: `var(--${tone})` }}>{sublabel}</span>}
-          <span>{sub}</span>
-        </div>
-      )}
-    </div>
-  );
+function renderHOA() {
+  document.getElementById('hoa-detail').innerHTML = months.map((m, i) => {
+    const row = hoaData[i];
+    const total = row.reduce((a,b) => a+b, 0);
+    return `<div class="hoa-row">
+      <div><div class="hoa-month">${m}</div><div class="hoa-units">${row.map((v,j)=>'$'+Math.round(v)).join(' · ')}</div></div>
+      <div class="hoa-total">$${Math.round(total)}</div>
+    </div>`;
+  }).join('');
 }
 
-// ---- Card chrome ----
-function Card({ title, action, children, padded = true, style = {} }) {
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      border: "0.5px solid var(--line)",
-      borderRadius: "var(--r-lg)",
-      overflow: "hidden",
-      ...style,
-    }}>
-      {(title || action) && (
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "14px 18px",
-          borderBottom: "0.5px solid var(--line)",
-        }}>
-          <div style={{ fontFamily: "var(--serif)", fontSize: 20, color: "var(--t1)" }}>{title}</div>
-          {action}
-        </div>
-      )}
-      <div style={{ padding: padded ? "14px 18px" : 0 }}>{children}</div>
-    </div>
-  );
-}
+function renderTasks() {
+  let filtered = tasks;
+  if (taskFilter === 'done') filtered = tasks.filter(t => t.done);
+  else if (taskFilter !== 'all') filtered = tasks.filter(t => String(t.prop) === taskFilter && !t.done);
+  else filtered = tasks.filter(t => !t.done).concat(tasks.filter(t => t.done)).slice(0,20);
 
-// ---- Section header (large, editorial) ----
-function PageHead({ kicker, title, sub, right }) {
-  return (
-    <div style={{
-      display: "flex",
-      alignItems: "flex-end",
-      justifyContent: "space-between",
-      padding: "28px 40px 20px",
-      borderBottom: "0.5px solid var(--line)",
-      gap: 24,
-    }}>
-      <div>
-        {kicker && <div style={{
-          fontFamily: "var(--mono)", fontSize: 10, letterSpacing: 2,
-          textTransform: "uppercase", color: "var(--t2)", marginBottom: 6
-        }}>{kicker}</div>}
-        <div style={{
-          fontFamily: "var(--serif)", fontSize: 42, lineHeight: 1.05,
-          fontStyle: "italic", color: "var(--t1)", letterSpacing: -0.5
-        }}>{title}</div>
-        {sub && <div style={{ fontSize: 13, color: "var(--t2)", marginTop: 8, maxWidth: 560 }}>{sub}</div>}
-      </div>
-      {right && <div>{right}</div>}
-    </div>
-  );
-}
-
-// ---- Status pill for tasks ----
-function TaskStatusPill({ status, priority }) {
-  if (status === "done") return <Pill tone="ok" mono>Done</Pill>;
-  if (priority === "high") return <Pill tone="danger" mono>High</Pill>;
-  if (priority === "med")  return <Pill tone="warn" mono>Med</Pill>;
-  return <Pill tone="muted" mono>Low</Pill>;
-}
-
-function BillStatusPill({ status }) {
-  if (status === "paid")    return <Pill tone="ok" mono>Paid</Pill>;
-  if (status === "overdue") return <Pill tone="danger" mono>Overdue</Pill>;
-  return <Pill tone="warn" mono>Unpaid</Pill>;
-}
-
-// ---- Sparkline (income vs expense) ----
-function Sparkline({ income, expense, width = 220, height = 56 }) {
-  const max = Math.max(...income, ...expense);
-  const stepX = width / (income.length - 1);
-  const toY = v => height - (v / max) * (height - 4) - 2;
-  const inPath = income.map((v, i) => `${i === 0 ? "M" : "L"}${i * stepX},${toY(v)}`).join(" ");
-  const exPath = expense.map((v, i) => `${i === 0 ? "M" : "L"}${i * stepX},${toY(v)}`).join(" ");
-  const inArea = `${inPath} L${width},${height} L0,${height} Z`;
-  return (
-    <svg width={width} height={height} style={{ display: "block" }}>
-      <path d={inArea} fill="var(--primary-soft)" />
-      <path d={inPath} stroke="var(--primary)" strokeWidth="1.5" fill="none" />
-      <path d={exPath} stroke="var(--accent)" strokeWidth="1.2" fill="none" strokeDasharray="2,2" />
-    </svg>
-  );
-}
-
-// ---- Bookings strip (mini gantt for a property) ----
-function BookingStrip({ bookings, days = 28, startISO = "2026-05-20" }) {
-  const start = parseDate(startISO);
-  const dayWidth = 100 / days;
-  return (
-    <div style={{ position: "relative", height: 32, background: "var(--bg3)", borderRadius: 4, overflow: "hidden" }}>
-      {bookings.map(b => {
-        const inDay = Math.max(0, (parseDate(b.checkin) - start) / 86400000);
-        const outDay = Math.min(days, (parseDate(b.checkout) - start) / 86400000);
-        if (outDay <= 0 || inDay >= days) return null;
-        const left = inDay * dayWidth;
-        const w = Math.max(0.8, (outDay - inDay) * dayWidth);
-        const color = b.status === "in-house" ? "var(--accent)" : "var(--primary)";
-        return (
-          <div key={b.id} title={`${b.guest} · ${b.nights}n`} style={{
-            position: "absolute",
-            top: 4, bottom: 4,
-            left: `${left}%`,
-            width: `${w}%`,
-            background: color,
-            borderRadius: 3,
-            display: "flex",
-            alignItems: "center",
-            padding: "0 6px",
-            overflow: "hidden",
-          }}>
-            <span style={{ fontSize: 10, color: "#fff", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
-              {b.guest}
-            </span>
+  document.getElementById('task-list').innerHTML = filtered.length
+    ? filtered.map(t => {
+        const pc = t.priority === 'high' ? 'p-h' : t.priority === 'med' ? 'p-m' : 'p-l';
+        const pn = propNames[t.prop] || 'All';
+        return `<div class="task-item">
+          <div class="pdot ${pc}"></div>
+          <div class="task-check ${t.done?'done':''}" onclick="toggleTask(${t.id})"></div>
+          <div style="flex:1">
+            <div class="task-title ${t.done?'done':''}">${t.title}</div>
+            <div class="task-meta">${t.date}</div>
+            <span class="task-tag">${pn}</span>
           </div>
-        );
-      })}
-    </div>
-  );
+        </div>`;
+      }).join('')
+    : '<div class="empty">No tasks here ✓</div>';
 }
 
-// ---- Icon (minimal, line-only) ----
-function Icon({ name, size = 16, strokeWidth = 1.5 }) {
-  const common = {
-    width: size, height: size, viewBox: "0 0 24 24",
-    fill: "none", stroke: "currentColor", strokeWidth, strokeLinecap: "round", strokeLinejoin: "round",
-  };
-  const paths = {
-    home:   <><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1z"/></>,
-    check:  <><path d="M4 12l5 5L20 6"/></>,
-    bill:   <><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></>,
-    cal:    <><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9h18"/><path d="M8 3v4"/><path d="M16 3v4"/></>,
-    tag:    <><path d="M3 12V4a1 1 0 011-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1"/></>,
-    plus:   <><path d="M12 5v14"/><path d="M5 12h14"/></>,
-    filter: <><path d="M3 5h18"/><path d="M6 12h12"/><path d="M10 19h4"/></>,
-    chev:   <><path d="M9 6l6 6-6 6"/></>,
-    chevD:  <><path d="M6 9l6 6 6-6"/></>,
-    dot:    <><circle cx="12" cy="12" r="2"/></>,
-    arrow:  <><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></>,
-    pin:    <><path d="M12 21s-7-7.5-7-12a7 7 0 0114 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></>,
-    bed:    <><path d="M3 18V8"/><path d="M21 18v-5a3 3 0 00-3-3H3"/><path d="M3 18h18"/><circle cx="7.5" cy="11.5" r="1.5"/></>,
-    bath:   <><path d="M4 11h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4z"/><path d="M6 11V6a2 2 0 014 0"/><path d="M5 21l1-3"/><path d="M19 21l-1-3"/></>,
-    user:   <><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></>,
-    search: <><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></>,
-    sun:    <><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></>,
-  };
-  return <svg {...common}>{paths[name] || null}</svg>;
+function toggleTask(id) {
+  const t = tasks.find(x => x.id === id);
+  if (t) t.done = !t.done;
+  renderTasks();
+  saveTasks();
 }
 
-Object.assign(window, {
-  useCurrency, parseDate, fmtDate, daysFromNow, dueLabel,
-  Pill, PropImg, Kpi, Card, PageHead, TaskStatusPill, BillStatusPill, Sparkline, BookingStrip, Icon,
-});
-
-</script>
-<script type="text/babel" data-presets="env,react">
-// Nena Casa — Contacts (soft cards)
-const { useState: useStateC } = React;
-
-function ContactCard({ c }) {
-  const [open, setOpen] = useStateC(true);
-  const [newQ, setNewQ] = useStateC("");
-  const [questions, setQuestions] = useStateC(c.questions);
-
-  const addQ = () => {
-    const t = newQ.trim();
-    if (!t) return;
-    setQuestions([...questions, { id: `q-${Date.now()}`, text: t, priority: "med" }]);
-    setNewQ("");
-  };
-  const toggleDone = (id) => {
-    setQuestions(questions.map(q => q.id === id ? { ...q, done: !q.done } : q));
-  };
-
-  const pending = questions.filter(q => !q.done).length;
-  const initials = c.name.split(" ").map(n => n[0]).slice(0, 2).join("");
-
-  return (
-    <article style={{
-      background: "var(--bg2)",
-      borderRadius: 20,
-      boxShadow: "var(--shadow-sm)",
-      border: "1px solid var(--line)",
-      overflow: "hidden",
-    }}>
-      {/* Header */}
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto 1fr auto auto",
-          gap: 16,
-          alignItems: "center",
-          padding: "20px 24px",
-          width: "100%",
-          textAlign: "left",
-          background: "transparent",
-          borderBottom: open ? "1px solid var(--line)" : "none",
-        }}
-      >
-        <div style={{
-          width: 48, height: 48, borderRadius: 50,
-          background: `linear-gradient(135deg, oklch(0.72 0.10 ${c.hue}), oklch(0.50 0.12 ${c.hue}))`,
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "#fff", fontWeight: 700, fontSize: 16,
-        }}>{initials}</div>
-
-        <div style={{ minWidth: 0 }}>
-          <div style={{
-            fontSize: 11, fontWeight: 600, letterSpacing: 0.6,
-            color: "var(--t3)", textTransform: "uppercase", marginBottom: 3,
-          }}>{c.role}</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--t1)", letterSpacing: -0.2 }}>{c.name}</div>
-          <div style={{ fontSize: 12.5, color: "var(--t2)", marginTop: 3, fontWeight: 500 }}>
-            {c.firm} · {c.phone} · {c.email}
-          </div>
-        </div>
-
-        <div style={{ textAlign: "right" }}>
-          <div style={{
-            fontSize: 11, fontWeight: 600, letterSpacing: 0.6,
-            color: "var(--t3)", textTransform: "uppercase",
-          }}>Pending</div>
-          <div style={{
-            fontSize: 24, fontWeight: 700, lineHeight: 1, marginTop: 4,
-            color: pending > 0 ? "var(--t1)" : "var(--ok)",
-            letterSpacing: -0.4,
-          }}>{pending}</div>
-        </div>
-
-        <div style={{ fontSize: 14, color: "var(--t3)", padding: 4 }}>
-          {open ? "▾" : "▸"}
-        </div>
-      </button>
-
-      {/* Body */}
-      {open && (
-        <div style={{ padding: "8px 24px 20px" }}>
-          {questions.length === 0 && (
-            <div style={{ fontSize: 13, color: "var(--t3)", padding: "12px 0 4px" }}>
-              No questions yet. Add one below.
-            </div>
-          )}
-          <div>
-            {questions.map((q, i) => {
-              const tone = q.priority === "high" ? "danger" : q.priority === "med" ? "warn" : "muted";
-              const toneBg = q.priority === "high" ? "var(--danger-soft)"
-                           : q.priority === "med" ? "var(--warn-soft)"
-                           : "var(--bg3)";
-              const toneFg = q.priority === "high" ? "var(--danger)"
-                           : q.priority === "med" ? "var(--warn)"
-                           : "var(--t2)";
-              return (
-                <div key={q.id} style={{
-                  display: "grid",
-                  gridTemplateColumns: "auto 1fr auto",
-                  gap: 14,
-                  alignItems: "center",
-                  padding: "14px 0",
-                  borderBottom: i === questions.length - 1 ? "none" : "1px solid var(--line)",
-                  opacity: q.done ? 0.5 : 1,
-                }}>
-                  <button
-                    onClick={() => toggleDone(q.id)}
-                    style={{
-                      width: 22, height: 22, borderRadius: 7,
-                      border: "1.5px solid " + (q.done ? "var(--primary)" : "var(--line2)"),
-                      background: q.done ? "var(--primary)" : "transparent",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      flexShrink: 0,
-                      transition: "all 120ms",
-                    }}>
-                    {q.done && <span style={{ color: "#fff", fontSize: 13, lineHeight: 1 }}>✓</span>}
-                  </button>
-                  <div style={{
-                    fontSize: 14, fontWeight: 500, color: "var(--t1)",
-                    lineHeight: 1.4,
-                    textDecoration: q.done ? "line-through" : "none",
-                  }}>{q.text}</div>
-                  <span style={{
-                    fontSize: 11, fontWeight: 600,
-                    padding: "4px 10px", borderRadius: 999,
-                    background: toneBg, color: toneFg,
-                    textTransform: "capitalize",
-                  }}>{q.priority}</span>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Add new question */}
-          <div style={{
-            display: "flex",
-            gap: 10,
-            marginTop: 16,
-            paddingTop: 16,
-            borderTop: "1px solid var(--line)",
-          }}>
-            <input
-              value={newQ}
-              onChange={(e) => setNewQ(e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter") addQ(); }}
-              placeholder={`Add a question for ${c.name.split(" ")[0]}…`}
-              style={{
-                flex: 1,
-                padding: "11px 16px",
-                background: "var(--bg)",
-                border: "1px solid var(--line2)",
-                borderRadius: 12,
-                fontSize: 13.5,
-                color: "var(--t1)",
-                outline: "none",
-                fontFamily: "var(--sans)",
-              }}
-            />
-            <button
-              onClick={addQ}
-              style={{
-                padding: "11px 20px",
-                background: "var(--primary)",
-                color: "#fff",
-                border: "none",
-                borderRadius: 12,
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
-            >Add</button>
-          </div>
-        </div>
-      )}
-    </article>
-  );
+function addTask() {
+  const inp = document.getElementById('ti');
+  const sel = document.getElementById('tp');
+  const title = inp.value.trim();
+  if (!title) return;
+  tasks.unshift({id:nextId++, title, prop:parseInt(sel.value), priority:'med', done:false, date:'Added'});
+  inp.value = '';
+  renderTasks();
+  saveTasks();
 }
 
-function ContactsSection({ filterId }) {
-  const { contacts } = window.CASA_ANA_DATA;
-  const [activeId, setActiveId] = useStateC(filterId || contacts[0].id);
-  const current = contacts.find(c => c.id === activeId) || contacts[0];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
-      <section>
-        <div style={{
-          fontSize: 11, fontWeight: 600, letterSpacing: 0.8,
-          color: "var(--t3)", textTransform: "uppercase", marginBottom: 10,
-        }}>People</div>
-        <h1 style={{
-          fontSize: 48, fontWeight: 700, lineHeight: 1.05,
-          letterSpacing: -1, margin: 0, color: "var(--t1)",
-        }}>Contacts</h1>
-        <div style={{ fontSize: 14.5, color: "var(--t2)", marginTop: 10, fontWeight: 500, maxWidth: 560 }}>
-          Park questions here as they come up, then bring the list to your next call.
-        </div>
-      </section>
-
-      {/* Contact sub-tabs */}
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-        {contacts.map(c => {
-          const isActive = activeId === c.id;
-          return (
-            <button
-              key={c.id}
-              onClick={() => setActiveId(c.id)}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "9px 16px",
-                borderRadius: 999,
-                background: isActive ? "var(--primary-tint)" : "var(--bg2)",
-                color: isActive ? "var(--primary-deep)" : "var(--t2)",
-                fontWeight: isActive ? 600 : 500,
-                fontSize: 13,
-                cursor: "pointer",
-                border: "1px solid " + (isActive ? "var(--primary-tint)" : "var(--line)"),
-                transition: "all 120ms",
-              }}
-            >
-              <span style={{
-                width: 8, height: 8, borderRadius: 50,
-                background: `linear-gradient(135deg, oklch(0.72 0.10 ${c.hue}), oklch(0.52 0.12 ${c.hue}))`,
-              }}/>
-              {c.role}
-            </button>
-          );
-        })}
-      </div>
-
-      <ContactCard c={current} />
-    </div>
-  );
+function filterTasks(f, el) {
+  taskFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderTasks();
 }
 
-Object.assign(window, { ContactsSection });
-
-</script>
-<script type="text/babel" data-presets="env,react">
-// Nena Casa — soft sidebar layout with monthly tables
-const { useState, useEffect, useMemo } = React;
-
-// ─── Sidebar ────────────────────────────────────────────────────
-function Sidebar({ active, onPick }) {
-  const { properties } = window.CASA_ANA_DATA;
-  return (
-    <aside style={{
-      width: 280,
-      background: "var(--bg2)",
-      borderRight: "1px solid var(--line)",
-      padding: "28px 18px",
-      display: "flex",
-      flexDirection: "column",
-      gap: 24,
-      flexShrink: 0,
-      overflowY: "auto",
-    }}>
-      {/* Brand */}
-      <div style={{ padding: "0 10px" }}>
-        <div style={{
-          fontFamily: "var(--sans)", fontWeight: 700,
-          fontSize: 22, lineHeight: 1, color: "var(--primary)",
-          letterSpacing: -0.4,
-        }}>Nena Casa</div>
-        <div style={{
-          fontSize: 11, color: "var(--t3)", marginTop: 6,
-          letterSpacing: 0.2, fontWeight: 500,
-        }}>Costa Rica · 4 rentals</div>
-      </div>
-
-      {/* Overview */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 8 }}>
-        <button
-          onClick={() => onPick("overview")}
-          style={{
-            display: "flex", alignItems: "center", gap: 12,
-            padding: "11px 12px", borderRadius: 12,
-            background: active === "overview" ? "var(--primary-tint)" : "transparent",
-            color: active === "overview" ? "var(--primary-deep)" : "var(--t1)",
-            fontWeight: active === "overview" ? 600 : 500,
-            fontSize: 14, textAlign: "left",
-            transition: "background 120ms",
-          }}
-          onMouseEnter={e => { if (active !== "overview") e.currentTarget.style.background = "var(--bg3)"; }}
-          onMouseLeave={e => { if (active !== "overview") e.currentTarget.style.background = "transparent"; }}
-        >
-          <span style={{
-            width: 10, height: 10, borderRadius: 3,
-            background: "linear-gradient(135deg, var(--primary), var(--primary-deep))",
-            flexShrink: 0,
-          }}/>
-          <span style={{ flex: 1 }}>Overview</span>
-        </button>
-      </div>
-
-      {/* Properties */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <div style={{
-          fontSize: 11, fontWeight: 600, letterSpacing: 0.8,
-          color: "var(--t3)", textTransform: "uppercase",
-          padding: "6px 12px 10px",
-        }}>Properties</div>
-        {properties.map(p => {
-          const isActive = active === p.id;
-          return (
-            <button
-              key={p.id}
-              onClick={() => onPick(p.id)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "11px 12px",
-                borderRadius: 12,
-                background: isActive ? "var(--primary-tint)" : "transparent",
-                color: isActive ? "var(--primary-deep)" : "var(--t1)",
-                fontWeight: isActive ? 600 : 500,
-                fontSize: 14,
-                textAlign: "left",
-                transition: "background 120ms",
-              }}
-              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "var(--bg3)"; }}
-              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
-            >
-              <span style={{
-                width: 10, height: 10, borderRadius: 50,
-                background: `linear-gradient(135deg, oklch(0.72 0.10 ${p.hue}), oklch(0.52 0.12 ${p.hue}))`,
-                flexShrink: 0,
-              }}/>
-              <span style={{ flex: 1 }}>{p.name}</span>
-              {p.status === "for-sale" && (
-                <span style={{
-                  fontSize: 10, fontWeight: 700, letterSpacing: 0.4,
-                  color: "var(--accent)", background: "var(--accent-soft)",
-                  padding: "2px 8px", borderRadius: 999,
-                  textTransform: "uppercase",
-                }}>For sale</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* People */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <div style={{
-          fontSize: 11, fontWeight: 600, letterSpacing: 0.8,
-          color: "var(--t3)", textTransform: "uppercase",
-          padding: "6px 12px 10px",
-        }}>People</div>
-        {window.CASA_ANA_DATA.contacts.map(c => {
-          const key = `contact:${c.id}`;
-          const isActive = active === key;
-          const pending = c.questions.filter(q => !q.done).length;
-          return (
-            <button
-              key={c.id}
-              onClick={() => onPick(key)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "11px 12px",
-                borderRadius: 12,
-                background: isActive ? "var(--primary-tint)" : "transparent",
-                color: isActive ? "var(--primary-deep)" : "var(--t1)",
-                fontWeight: isActive ? 600 : 500,
-                fontSize: 14,
-                textAlign: "left",
-                transition: "background 120ms",
-              }}
-              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "var(--bg3)"; }}
-              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
-            >
-              <span style={{
-                width: 10, height: 10, borderRadius: 50,
-                background: `linear-gradient(135deg, oklch(0.72 0.10 ${c.hue}), oklch(0.52 0.12 ${c.hue}))`,
-                flexShrink: 0,
-              }}/>
-              <span style={{ flex: 1 }}>{c.role}</span>
-              {pending > 0 && (
-                <span style={{
-                  fontSize: 11, fontWeight: 600,
-                  color: isActive ? "var(--primary-deep)" : "var(--t3)",
-                  background: isActive ? "var(--bg2)" : "var(--bg3)",
-                  padding: "2px 8px", borderRadius: 999,
-                }}>{pending}</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Footer */}
-      <div style={{ marginTop: "auto", padding: "16px 10px 4px", borderTop: "1px solid var(--line)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 50,
-            background: "linear-gradient(135deg, #D88656, #C7A769)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "#fff", fontWeight: 700, fontSize: 14,
-          }}>A</div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "var(--t1)" }}>Ana Augustine</div>
-            <div style={{ fontSize: 11, color: "var(--t3)" }}>Owner</div>
-          </div>
-          <a href="sign-in.html" title="Sign in" style={{
-            fontSize: 11, fontWeight: 600, color: "var(--t2)",
-            border: "1px solid var(--line2)", borderRadius: 999,
-            padding: "5px 10px", textDecoration: "none",
-            background: "var(--bg2)",
-          }}>Sign in</a>
-        </div>
-      </div>
-    </aside>
-  );
+function saveTasks() {
+  try { localStorage.setItem('ana_tasks_v2', JSON.stringify(tasks)); nextId = Math.max(...tasks.map(t=>t.id))+1; } catch(e){}
+}
+function loadTasks() {
+  try {
+    const saved = localStorage.getItem('ana_tasks_v2');
+    if (saved) { tasks = JSON.parse(saved); nextId = Math.max(...tasks.map(t=>t.id))+1; }
+  } catch(e){}
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────
-const FX = 510; // CRC per USD (rough)
-const fmt$ = n => (n == null) ? "—" : (n === 0 ? "$0" : `${Number(n).toLocaleString("en-US", { maximumFractionDigits: 2 })}`);
-const fmtCRC = n => (n == null || n === 0) ? "" : `₡${Math.round(Number(n) * FX).toLocaleString("en-US")}`;
-const pctOf = (part, whole) => {
-  if (!whole) return "—";
-  const p = (part / whole) * 100;
-  return `${p.toFixed(p < 10 ? 1 : 0)}% of rent`;
-};
+function renderSummary() {
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const neg = n => '−' + fmt(n);
+  const rent = rentData.reduce((a,r) => a + r.reduce((x,y)=>x+y,0), 0);
+  const hoa = hoaData.reduce((a,r) => a + r.reduce((x,y)=>x+y,0), 0);
+  const assess = assessments.reduce((a,x) => a + x.amt, 0);
+  const bank = bankFees.reduce((a,f) => a + f.a, 0);
 
-function BreakdownBar({ segments, total }) {
-  const sum = segments.reduce((s, x) => s + (x.amt || 0), 0);
-  const denom = Math.max(total, sum) || 1;
-  return (
-    <div>
-      <div style={{
-        display: "flex", height: 14, borderRadius: 999,
-        overflow: "hidden", background: "var(--bg3)",
-      }}>
-        {segments.map((s, i) => {
-          const w = (s.amt / denom) * 100;
-          if (w < 0.1) return null;
-          return (
-            <div key={i} title={`${s.label}: ${fmt$(s.amt)}`} style={{
-              width: `${w}%`, background: s.color,
-              transition: "width 200ms",
-            }}/>
-          );
-        })}
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginTop: 12 }}>
-        {segments.map((s, i) => {
-          if (!s.amt) return null;
-          const pct = (s.amt / denom) * 100;
-          return (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}>
-              <span style={{ width: 9, height: 9, borderRadius: 2, background: s.color }}/>
-              <span style={{ color: "var(--t1)", fontWeight: 600 }}>{s.label}</span>
-              <span style={{ color: "var(--t3)", fontVariantNumeric: "tabular-nums" }}>{pct.toFixed(pct < 10 ? 1 : 0)}%</span>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// Combined money cell: USD primary, CRC secondary underneath
-function Money({ amount, sign = "+", muted = false, skip = false, negative = false }) {
-  if (amount == null || skip) {
-    return <span style={{ color: "var(--t3)", fontWeight: 600 }}>—</span>;
-  }
-  const color = muted ? "var(--t3)" : negative ? "var(--danger)" : "var(--ok)";
-  return (
-    <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end", lineHeight: 1.1 }}>
-      <span style={{ fontSize: 14, fontWeight: 600, color, fontVariantNumeric: "tabular-nums" }}>
-        {sign}{fmt$(amount)}
-      </span>
-      {amount > 0 && (
-        <span style={{ fontSize: 10.5, color: "var(--t3)", fontWeight: 500, marginTop: 3, fontVariantNumeric: "tabular-nums" }}>
-          {fmtCRC(amount)}
-        </span>
-      )}
-    </span>
-  );
-}
-
-// Sum a number array ignoring nulls
-const sum = arr => arr.filter(v => v != null).reduce((s, v) => s + v, 0);
-
-// ─── Property page ──────────────────────────────────────────────
-function PropertyPage({ p }) {
-  const data = window.CASA_ANA_DATA;
-  const { months, expenses, pikiFunds, ricardo } = data;
-
-  // Slice months to what's "active" — first index that's null+1
-  const lastRentIdx = (() => {
-    let last = -1;
-    p.rent.forEach((v, i) => { if (v != null) last = i; });
-    return last;
-  })();
-  const visibleMonths = months.slice(0, Math.max(lastRentIdx + 1, 8));
-
-  // Totals
-  const rentYTD = sum(p.rent);
-  const hoaYTD = sum(p.hoa);
-  const expensesForProp = expenses.filter(e => e[p.id]).map(e => ({ month: e.month, cat: e.cat, amt: e[p.id], note: e.note }));
-  const expensesYTD = expensesForProp.reduce((s, e) => s + (e.amt || 0), 0);
-  // Group by category
-  const expenseCats = {};
-  expensesForProp.forEach(e => {
-    if (!expenseCats[e.cat]) expenseCats[e.cat] = { total: 0, items: [] };
-    expenseCats[e.cat].total += e.amt || 0;
-    expenseCats[e.cat].items.push(e);
-  });
-  const expenseCatList = Object.entries(expenseCats).sort((a, b) => b[1].total - a[1].total);
-  const pikiForProp = pikiFunds.filter(e => e[p.id]).map(e => ({ month: e.month, amt: e[p.id], note: e.note }));
-  const pikiYTD = pikiForProp.reduce((s, e) => s + (e.amt || 0), 0);
-  const ricardoForProp = ricardo[p.id] || [];
-  const ricardoYTD = ricardoForProp.reduce((s, r) => s + (r.skip ? 0 : (r.amt || 0)), 0);
-  const totalOut = hoaYTD + expensesYTD + pikiYTD + ricardoYTD;
-  const net = rentYTD - totalOut;
-
-  const statusMap = {
-    rented:    { tone: "var(--ok)",      bg: "var(--ok-soft)",     label: "Rented" },
-    vacant:    { tone: "var(--warn)",    bg: "var(--warn-soft)",   label: "Vacant" },
-    watch:     { tone: "var(--warn)",    bg: "var(--warn-soft)",   label: "Watch" },
-    "for-sale":{ tone: "var(--accent)",  bg: "var(--accent-soft)", label: "For sale" },
-  };
-  const st = statusMap[p.status] || statusMap.rented;
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-      {/* Hero */}
-      <section>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-          <SoftPill color={st.tone} bg={st.bg}>{st.label}</SoftPill>
-          <span style={{ fontSize: 12, color: "var(--t3)", fontWeight: 500 }}>
-            Managed by {p.manager} · {p.llc}
-          </span>
-        </div>
-        <h1 style={{
-          fontSize: 48, fontWeight: 700, lineHeight: 1.05,
-          letterSpacing: -1, margin: 0, color: "var(--t1)",
-        }}>{p.name}</h1>
-      </section>
-
-      {/* Comps — top of page */}
-      <CompsBlock kind="rent" p={p} />
-      <CompsBlock kind="sale" p={p} />
-
-      {/* YTD summary — split by category */}
-      <section style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)",
-        gap: 12,
-      }}>
-        <StatTile label="Rent collected" value={fmt$(rentYTD)} crcValue={fmtCRC(rentYTD)} sub="100% · income" tone="ok" />
-        <StatTile label="HOA"            value={fmt$(hoaYTD)}  crcValue={fmtCRC(hoaYTD)}  sub={pctOf(hoaYTD, rentYTD)} tone="danger" />
-        <StatTile label="Piki Funds"     value={fmt$(pikiYTD)} crcValue={fmtCRC(pikiYTD)} sub={pctOf(pikiYTD, rentYTD)} tone="danger" />
-        <StatTile label="Ricardo"        value={fmt$(ricardoYTD)} crcValue={fmtCRC(ricardoYTD)} sub={pctOf(ricardoYTD, rentYTD)} tone="danger" />
-      </section>
-
-      {/* Expense category tiles */}
-      {expenseCatList.length > 0 && (
-        <section>
-          <SectionHead title="Expenses by category" sub={`Total ${fmt$(expensesYTD)} · ${pctOf(expensesYTD, rentYTD)}`} />
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${Math.min(expenseCatList.length, 4)}, 1fr)`,
-            gap: 12,
-          }}>
-            {expenseCatList.map(([cat, info]) => (
-              <StatTile key={cat} label={cat} value={fmt$(info.total)} crcValue={fmtCRC(info.total)} sub={pctOf(info.total, rentYTD)} tone="danger" />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Net + breakdown bar */}
-      <section style={{
-        background: "var(--bg2)",
-        borderRadius: 20,
-        padding: "24px 28px",
-        boxShadow: "var(--shadow-sm)",
-        border: "1px solid var(--line)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 18,
-      }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-          <div>
-            <div style={{
-              fontSize: 11, fontWeight: 600, color: "var(--t3)",
-              textTransform: "uppercase", letterSpacing: 0.6,
-            }}>Net YTD</div>
-            <div style={{
-              fontSize: 38, fontWeight: 700, marginTop: 6, lineHeight: 1,
-              letterSpacing: -0.8, fontVariantNumeric: "tabular-nums",
-              color: net >= 0 ? "var(--ok)" : "var(--danger)",
-            }}>{fmt$(net)}</div>
-            <div style={{ fontSize: 12, color: "var(--t3)", marginTop: 4, fontVariantNumeric: "tabular-nums" }}>
-              {fmtCRC(net)}
-            </div>
-          </div>
-          {rentYTD > 0 && (
-            <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 13, color: "var(--t2)", fontWeight: 500 }}>
-                {Math.round((net / rentYTD) * 100)}% profit
-              </div>
-              <div style={{ fontSize: 11.5, color: "var(--t3)", marginTop: 4 }}>
-                {Math.round((totalOut / rentYTD) * 100)}% goes out
-              </div>
-            </div>
-          )}
-        </div>
-        <BreakdownBar segments={[
-          { label: "HOA",      amt: hoaYTD,      color: "#C76A56" },
-          { label: "Expenses", amt: expensesYTD, color: "#D88656" },
-          { label: "Piki",     amt: pikiYTD,     color: "#D9A24A" },
-          { label: "Ricardo",  amt: ricardoYTD,  color: "#9C7A4A" },
-          { label: "Kept",     amt: Math.max(net, 0), color: "#2D6B5A" },
-        ]} total={rentYTD} />
-      </section>
-
-      {/* Rent collected */}
-      <MonthTable
-        title="Rent Collected"
-        sub={`Monthly rent in. YTD ${fmt$(rentYTD)}.`}
-        rows={visibleMonths.map((m, i) => ({ month: m, amt: p.rent[i] }))}
-        emptyAs="—"
-      />
-
-      {/* HOA Maintenance */}
-      <MonthTable
-        title="HOA Maintenance Paid (Actuals)"
-        sub={`Actuals as paid. YTD ${fmt$(hoaYTD)}.`}
-        rows={visibleMonths.map((m, i) => ({ month: m, amt: p.hoa[i] }))}
-        emptyAs="—"
-        negative
-      />
-
-      {/* Expenses — grouped by category */}
-      <section>
-        <SectionHead title="Expenses" sub={`One-offs by category. YTD ${fmt$(expensesYTD)}.`} />
-        {expenseCatList.length === 0 ? (
-          <div style={{
-            background: "var(--bg2)", borderRadius: 20, padding: "26px 24px",
-            color: "var(--t3)", textAlign: "center", fontSize: 13.5,
-            boxShadow: "var(--shadow-sm)", border: "1px solid var(--line)",
-          }}>None yet for this property.</div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {expenseCatList.map(([cat, group]) => (
-              <ExpenseCategoryCard key={cat} cat={cat} group={group} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Piki Funds */}
-      <NoteTable
-        title="Piki Funds"
-        sub={`Viáticos and pass-throughs. YTD ${fmt$(pikiYTD)}.`}
-        rows={pikiForProp}
-        negative
-      />
-
-      {/* Ricardo */}
-      <NoteTable
-        title="Ricardo"
-        sub={`Lawyer — monthly retainer. YTD ${fmt$(ricardoYTD)}.`}
-        rows={ricardoForProp}
-        negative
-        showSkips
-      />
-    </div>
-  );
-}
-
-// ─── Expense category card (collapsible group) ─────────────────
-function ExpenseCategoryCard({ cat, group }) {
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      borderRadius: 20,
-      boxShadow: "var(--shadow-sm)",
-      border: "1px solid var(--line)",
-      overflow: "hidden",
-    }}>
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "16px 22px",
-        borderBottom: "1px solid var(--line)",
-        background: "var(--bg)",
-      }}>
-        <div style={{
-          fontSize: 15, fontWeight: 700, color: "var(--t1)",
-          letterSpacing: -0.2,
-        }}>{cat}</div>
-        <Money amount={group.total} sign="-" negative />
-      </div>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <tbody>
-          {group.items.map((r, i) => (
-            <tr key={i} style={{
-              borderBottom: i === group.items.length - 1 ? "none" : "1px solid var(--line)",
-            }}>
-              <td style={{
-                padding: "12px 22px", fontSize: 13, fontWeight: 600, color: "var(--t1)",
-                width: 110, whiteSpace: "nowrap",
-              }}>{r.month}</td>
-              <td style={{
-                padding: "12px 16px", fontSize: 12.5, color: "var(--t2)", fontWeight: 500,
-              }}>{r.note}</td>
-              <td style={{
-                padding: "12px 22px", textAlign: "right", whiteSpace: "nowrap",
-              }}>
-                <Money amount={r.amt} sign="-" negative />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-// ─── Month table (rent / hoa) ───────────────────────────────────
-function MonthTable({ title, sub, rows, negative }) {
-  return (
-    <section>
-      <SectionHead title={title} sub={sub} />
-      <div style={{
-        background: "var(--bg2)",
-        borderRadius: 20,
-        boxShadow: "var(--shadow-sm)",
-        border: "1px solid var(--line)",
-        overflow: "hidden",
-      }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <tbody>
-            {rows.map((r, i) => {
-              const isLast = i === rows.length - 1;
-              const empty = r.amt == null;
-              return (
-                <tr key={r.month} style={{
-                  borderBottom: isLast ? "none" : "1px solid var(--line)",
-                }}>
-                  <td style={{
-                    padding: "13px 22px",
-                    fontSize: 13.5, fontWeight: 600, color: "var(--t1)",
-                    width: 140,
-                  }}>{r.month}</td>
-                  <td style={{
-                    padding: "13px 22px",
-                    textAlign: "right",
-                    whiteSpace: "nowrap",
-                  }}>
-                    <Money amount={r.amt} sign={empty ? "" : (negative ? "-" : "+")} negative={negative} />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
-
-// ─── Note-based table (expenses / piki / ricardo) ───────────────
-function NoteTable({ title, sub, rows, negative, showSkips }) {
-  return (
-    <section>
-      <SectionHead title={title} sub={sub} />
-      <div style={{
-        background: "var(--bg2)",
-        borderRadius: 20,
-        boxShadow: "var(--shadow-sm)",
-        border: "1px solid var(--line)",
-        overflow: "hidden",
-      }}>
-        {rows.length === 0 ? (
-          <div style={{ padding: "26px 24px", color: "var(--t3)", textAlign: "center", fontSize: 13.5 }}>
-            None yet for this property.
-          </div>
-        ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <tbody>
-              {rows.map((r, i) => {
-                const isLast = i === rows.length - 1;
-                const skip = r.skip;
-                return (
-                  <tr key={i} style={{
-                    borderBottom: isLast ? "none" : "1px solid var(--line)",
-                    background: skip ? "var(--bg3)" : "transparent",
-                  }}>
-                    <td style={{
-                      padding: "13px 22px",
-                      fontSize: 13.5, fontWeight: 600, color: "var(--t1)",
-                      width: 110,
-                      whiteSpace: "nowrap",
-                    }}>{r.month}</td>
-                    <td style={{
-                      padding: "13px 16px",
-                      fontSize: 13, color: skip ? "var(--t2)" : "var(--t2)",
-                      fontWeight: 500,
-                    }}>
-                      {r.note}
-                      {skip && (
-                        <span style={{
-                          marginLeft: 10,
-                          fontSize: 10.5, fontWeight: 700, letterSpacing: 0.6,
-                          color: "var(--warn)", background: "var(--warn-soft)",
-                          padding: "3px 9px", borderRadius: 999, textTransform: "uppercase",
-                        }}>Skipped</span>
-                      )}
-                    </td>
-                    <td style={{
-                      padding: "13px 22px",
-                      textAlign: "right",
-                      whiteSpace: "nowrap",
-                    }}>
-                      <Money amount={r.amt} sign={skip ? "" : (negative ? "-" : "+")} negative={negative} skip={skip} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </section>
-  );
-}
-
-// ─── Portfolio comps (overview combined view) ───────────────────
-function PortfolioComps({ properties }) {
-  // Aggregate rent comps across properties
-  const rentAvg = (() => {
-    let total = 0, count = 0;
-    properties.forEach(p => p.comps.rent.forEach(c => { total += c.rent; count++; }));
-    return count ? total / count : 0;
-  })();
-  const saleAvg = (() => {
-    let total = 0, count = 0;
-    properties.forEach(p => p.comps.sale.forEach(c => { total += c.price; count++; }));
-    return count ? total / count : 0;
-  })();
-  const yourEstTotal = properties.reduce((s, p) => s + (p.est || 0), 0);
-  const yourRentTotal = properties.reduce((s, p) => {
-    const last = [...p.rent].reverse().find(v => v != null && v > 0);
-    return s + (last || 0);
-  }, 0);
-
-  return (
-    <section>
-      <SectionHead title="Market comps" sub="Snapshot across all four units" />
-      <div style={{
-        background: "var(--bg2)",
-        borderRadius: 20,
-        boxShadow: "var(--shadow-sm)",
-        border: "1px solid var(--line)",
-        overflow: "hidden",
-      }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ background: "var(--bg3)" }}>
-              <th style={cellHead}>Property</th>
-              <th style={{ ...cellHead, textAlign: "right" }}>Current rent</th>
-              <th style={{ ...cellHead, textAlign: "right" }}>Rent comp avg</th>
-              <th style={{ ...cellHead, textAlign: "right" }}>Your sale est.</th>
-              <th style={{ ...cellHead, textAlign: "right" }}>Sale comp avg</th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((p, i) => {
-              const rAvg = p.comps.rent.reduce((s, c) => s + c.rent, 0) / p.comps.rent.length;
-              const sAvg = p.comps.sale.reduce((s, c) => s + c.price, 0) / p.comps.sale.length;
-              const lastRent = [...p.rent].reverse().find(v => v != null && v > 0);
-              const rDelta = (lastRent || 0) - rAvg;
-              const isLast = i === properties.length - 1;
-              return (
-                <tr key={p.id} style={{
-                  borderBottom: isLast ? "none" : "1px solid var(--line)",
-                }}>
-                  <td style={{ padding: "14px 22px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <span style={{
-                        width: 9, height: 9, borderRadius: 50,
-                        background: `linear-gradient(135deg, oklch(0.72 0.10 ${p.hue}), oklch(0.52 0.12 ${p.hue}))`,
-                      }}/>
-                      <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--t1)" }}>{p.name}</span>
-                      {p.status === "for-sale" && (
-                        <span style={{
-                          fontSize: 9, fontWeight: 700, letterSpacing: 0.4,
-                          color: "var(--accent)", background: "var(--accent-soft)",
-                          padding: "1px 6px", borderRadius: 999,
-                          textTransform: "uppercase",
-                        }}>For sale</span>
-                      )}
-                    </div>
-                  </td>
-                  <td style={{ padding: "14px 22px", textAlign: "right", fontSize: 13.5, fontWeight: 600, color: "var(--t1)", fontVariantNumeric: "tabular-nums" }}>
-                    {fmt$(lastRent)}
-                  </td>
-                  <td style={{ padding: "14px 22px", textAlign: "right", fontVariantNumeric: "tabular-nums" }}>
-                    <div style={{ fontSize: 13, color: "var(--t2)" }}>{fmt$(rAvg)}</div>
-                    {lastRent && (
-                      <div style={{
-                        fontSize: 11, fontWeight: 600, marginTop: 2,
-                        color: rDelta >= 0 ? "var(--ok)" : "var(--danger)",
-                      }}>{rDelta >= 0 ? "+" : ""}${Math.round(rDelta).toLocaleString()}</div>
-                    )}
-                  </td>
-                  <td style={{ padding: "14px 22px", textAlign: "right", fontSize: 13.5, fontWeight: 600, color: "var(--t1)", fontVariantNumeric: "tabular-nums" }}>
-                    {p.est ? `${(p.est/1000).toFixed(0)}k` : "—"}
-                  </td>
-                  <td style={{ padding: "14px 22px", textAlign: "right", fontSize: 13, color: "var(--t2)", fontVariantNumeric: "tabular-nums" }}>
-                    ${(sAvg/1000).toFixed(0)}k
-                  </td>
-                </tr>
-              );
-            })}
-            <tr style={{ background: "var(--primary-tint)", borderTop: "2px solid var(--line2)" }}>
-              <td style={{ padding: "16px 22px", fontSize: 13.5, fontWeight: 700, color: "var(--primary-deep)" }}>
-                Portfolio totals
-              </td>
-              <td style={{ padding: "16px 22px", textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--primary-deep)", fontVariantNumeric: "tabular-nums" }}>
-                {fmt$(yourRentTotal)}
-              </td>
-              <td style={{ padding: "16px 22px", textAlign: "right", fontSize: 13, color: "var(--t2)", fontVariantNumeric: "tabular-nums" }}>
-                avg {fmt$(rentAvg)}
-              </td>
-              <td style={{ padding: "16px 22px", textAlign: "right", fontSize: 14, fontWeight: 700, color: "var(--primary-deep)", fontVariantNumeric: "tabular-nums" }}>
-                ${(yourEstTotal/1000).toFixed(0)}k
-              </td>
-              <td style={{ padding: "16px 22px", textAlign: "right", fontSize: 13, color: "var(--t2)", fontVariantNumeric: "tabular-nums" }}>
-                avg ${(saleAvg/1000).toFixed(0)}k
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
-
-// ─── Comps block ────────────────────────────────────────────────
-function CompsBlock({ kind, p }) {
-  const comps = kind === "rent" ? p.comps.rent : p.comps.sale;
-  const title = kind === "rent" ? "Rental comps" : "For-sale comps";
-  let sub;
-  if (kind === "rent") {
-    const avg = comps.reduce((s, c) => s + c.rent, 0) / comps.length;
-    const lastRent = [...p.rent].reverse().find(v => v != null && v > 0);
-    if (lastRent) {
-      const delta = lastRent - avg;
-      const pct = Math.round((delta / avg) * 100);
-      sub = `Avg ${Math.round(avg).toLocaleString()} · you're ${delta >= 0 ? "above" : "below"} market by ${Math.round(Math.abs(delta)).toLocaleString()} (${pct > 0 ? "+" : ""}${pct}%)`;
-    } else {
-      sub = `Avg ${Math.round(avg).toLocaleString()}/mo nearby`;
-    }
-  } else {
-    sub = p.est ? `Your estimate: ${p.est.toLocaleString()}` : "Recent activity nearby";
-  }
-
-  return (
-    <section>
-      <SectionHead title={title} sub={sub} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}>
-        {comps.map((c, i) => (
-          <CompCard
-            key={i}
-            name={c.name}
-            sub={`${c.beds} BR · ${c.note}`}
-            price={kind === "rent" ? `${c.rent.toLocaleString()}` : `${(c.price / 1000).toFixed(0)}k`}
-            priceSub={kind === "rent" ? "per month" : `${c.price.toLocaleString()}`}
-            crcSub={kind === "rent" ? fmtCRC(c.rent) + "/mo" : fmtCRC(c.price)}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ─── Helper components ──────────────────────────────────────────
-function SoftPill({ children, color, bg }) {
-  return (
-    <span style={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 6,
-      padding: "5px 12px",
-      fontSize: 12,
-      fontWeight: 600,
-      borderRadius: 999,
-      background: bg,
-      color: color,
-    }}>
-      <span style={{ width: 6, height: 6, borderRadius: 50, background: color }}/>
-      {children}
-    </span>
-  );
-}
-
-function StatTile({ label, value, sub, tone, crcValue }) {
-  const color = tone === "ok" ? "var(--ok)" : tone === "danger" ? "var(--danger)" : "var(--t1)";
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      borderRadius: 20,
-      padding: "22px 24px",
-      boxShadow: "var(--shadow-sm)",
-      border: "1px solid var(--line)",
-    }}>
-      <div style={{
-        fontSize: 11, fontWeight: 600, color: "var(--t3)",
-        textTransform: "uppercase", letterSpacing: 0.6,
-      }}>{label}</div>
-      <div style={{
-        fontSize: 26, fontWeight: 700, color,
-        letterSpacing: -0.6, marginTop: 8, lineHeight: 1,
-        fontVariantNumeric: "tabular-nums",
-      }}>{value}</div>
-      {crcValue && (
-        <div style={{ fontSize: 12, color: "var(--t3)", marginTop: 4, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{crcValue}</div>
-      )}
-      <div style={{ fontSize: 11.5, color: "var(--t2)", marginTop: 6, fontWeight: 500 }}>{sub}</div>
-    </div>
-  );
-}
-
-function SectionHead({ title, sub }) {
-  return (
-    <div style={{ marginBottom: 16 }}>
-      <h2 style={{
-        fontSize: 22, fontWeight: 700, color: "var(--t1)",
-        margin: 0, letterSpacing: -0.4,
-      }}>{title}</h2>
-      {sub && <div style={{ fontSize: 13, color: "var(--t2)", marginTop: 4, fontWeight: 500 }}>{sub}</div>}
-    </div>
-  );
-}
-
-function CompCard({ name, sub, price, priceSub, crcSub }) {
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      borderRadius: 20,
-      padding: "22px 24px",
-      boxShadow: "var(--shadow-sm)",
-      border: "1px solid var(--line)",
-      display: "flex",
-      flexDirection: "column",
-      gap: 14,
-    }}>
-      <div>
-        <div style={{ fontSize: 16, fontWeight: 600, color: "var(--t1)", lineHeight: 1.2 }}>{name}</div>
-        <div style={{ fontSize: 12.5, color: "var(--t2)", marginTop: 4, fontWeight: 500 }}>{sub}</div>
-      </div>
-      <div style={{
-        paddingTop: 14,
-        borderTop: "1px solid var(--line)",
-      }}>
-        <div style={{ fontSize: 26, fontWeight: 700, color: "var(--t1)", letterSpacing: -0.6, lineHeight: 1 }}>{price}</div>
-        <div style={{ fontSize: 11.5, color: "var(--t3)", marginTop: 4, fontWeight: 500 }}>{priceSub}</div>
-        {crcSub && <div style={{ fontSize: 11, color: "var(--t3)", marginTop: 2, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{crcSub}</div>}
-      </div>
-    </div>
-  );
-}
-
-// ─── Overview (landing page) ───────────────────────────────────
-function Overview({ onPick }) {
-  const data = window.CASA_ANA_DATA;
-  const { properties, expenses, pikiFunds, ricardo, months } = data;
-
-  // Per-property totals + category breakdown
-  const expensesByCat = {};
+  // Categorize the operating expense log
+  const cat = { tax:0, repair:0, legal:0, sig:0, viat:0, other:0 };
   expenses.forEach(e => {
-    if (!expensesByCat[e.cat]) expensesByCat[e.cat] = 0;
-    expensesByCat[e.cat] += (e.manfredonia || 0) + (e.espada || 0) + (e.montijo || 0) + (e.antioco || 0);
-  });
-  const catList = Object.entries(expensesByCat).sort((a, b) => b[1] - a[1]);
-
-  const rows = properties.map(p => {
-    const rentYTD = sum(p.rent);
-    const hoaYTD = sum(p.hoa);
-    const expYTD = expenses.filter(e => e[p.id]).reduce((s, e) => s + (e[p.id] || 0), 0);
-    const pikiYTD = pikiFunds.filter(e => e[p.id]).reduce((s, e) => s + (e[p.id] || 0), 0);
-    const ricYTD = (ricardo[p.id] || []).reduce((s, r) => s + (r.skip ? 0 : (r.amt || 0)), 0);
-    const outYTD = hoaYTD + expYTD + pikiYTD + ricYTD;
-    const net = rentYTD - outYTD;
-    return { p, rentYTD, hoaYTD, expYTD, pikiYTD, ricYTD, outYTD, net };
+    const n = e.note.toLowerCase();
+    if (n.includes('tax')) cat.tax += e.amt;
+    else if (n.includes('repair') || n.includes('leak')) cat.repair += e.amt;
+    else if (n.includes('legal') || n.includes('lawyer')) cat.legal += e.amt;
+    else if (n.includes('signature')) cat.sig += e.amt;
+    else if (n.includes('viátic') || n.includes('viatic')) cat.viat += e.amt;
+    else cat.other += e.amt;
   });
 
-  const total = rows.reduce((acc, r) => ({
-    rent: acc.rent + r.rentYTD,
-    hoa: acc.hoa + r.hoaYTD,
-    exp: acc.exp + r.expYTD,
-    piki: acc.piki + r.pikiYTD,
-    ric: acc.ric + r.ricYTD,
-    out: acc.out + r.outYTD,
-    net: acc.net + r.net,
-  }), { rent: 0, hoa: 0, exp: 0, piki: 0, ric: 0, out: 0, net: 0 });
+  const profit = rent - assess - hoa - cat.tax - cat.repair - cat.legal - cat.sig - cat.viat - cat.other - bank;
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-      {/* Hero */}
-      <section>
-        <div style={{
-          fontSize: 11, fontWeight: 600, letterSpacing: 0.8,
-          color: "var(--t3)", textTransform: "uppercase", marginBottom: 10,
-        }}>Portfolio · Year to date</div>
-        <h1 style={{
-          fontSize: 48, fontWeight: 700, lineHeight: 1.05,
-          letterSpacing: -1, margin: 0, color: "var(--t1)",
-        }}>Running total</h1>
-        <div style={{ fontSize: 14.5, color: "var(--t2)", marginTop: 10, fontWeight: 500, maxWidth: 560 }}>
-          All four units combined. Click a property in the sidebar for the breakdown.
-        </div>
-      </section>
-
-      {/* Comps summary — all four properties */}
-      <section>
-        <SectionHead title="Comps · all properties" sub="Latest rent and what's selling nearby. Click a row to drill in." />
-        <div style={{
-          background: "var(--bg2)",
-          borderRadius: 20,
-          boxShadow: "var(--shadow-sm)",
-          border: "1px solid var(--line)",
-          overflow: "hidden",
-        }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ background: "var(--bg3)" }}>
-                <th style={cellHead}>Property</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Your rent</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Rent comp avg</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Your est.</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Sale comp avg</th>
-              </tr>
-            </thead>
-            <tbody>
-              {properties.map((p, i) => {
-                const lastRent = [...p.rent].reverse().find(v => v != null && v > 0);
-                const rentAvg = p.comps.rent.reduce((s, c) => s + c.rent, 0) / p.comps.rent.length;
-                const saleAvg = p.comps.sale.reduce((s, c) => s + c.price, 0) / p.comps.sale.length;
-                const rentDelta = lastRent ? lastRent - rentAvg : 0;
-                const saleDelta = p.est ? p.est - saleAvg : 0;
-                return (
-                  <tr key={p.id}
-                    onClick={() => onPick(p.id)}
-                    style={{
-                      borderBottom: i === properties.length - 1 ? "none" : "1px solid var(--line)",
-                      cursor: "pointer",
-                      transition: "background 120ms",
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = "var(--bg)"}
-                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-                  >
-                    <td style={{ padding: "16px 22px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <span style={{
-                          width: 10, height: 10, borderRadius: 50,
-                          background: `linear-gradient(135deg, oklch(0.72 0.10 ${p.hue}), oklch(0.52 0.12 ${p.hue}))`,
-                          flexShrink: 0,
-                        }}/>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 600, color: "var(--t1)" }}>{p.name}</div>
-                          <div style={{ fontSize: 11, color: "var(--t3)", marginTop: 2, fontWeight: 500 }}>
-                            {p.status === "for-sale" ? "For sale" : "Rented"}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--t1)", fontVariantNumeric: "tabular-nums" }}>
-                        {lastRent ? `${lastRent.toLocaleString()}` : "—"}
-                      </div>
-                      <div style={{ fontSize: 10.5, color: "var(--t3)", marginTop: 2, fontVariantNumeric: "tabular-nums" }}>/mo</div>
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: "var(--t2)", fontVariantNumeric: "tabular-nums" }}>
-                        ${Math.round(rentAvg).toLocaleString()}
-                      </div>
-                      {lastRent && (
-                        <div style={{
-                          fontSize: 10.5, fontWeight: 600, marginTop: 2, fontVariantNumeric: "tabular-nums",
-                          color: rentDelta >= 0 ? "var(--ok)" : "var(--danger)",
-                        }}>
-                          {rentDelta >= 0 ? "+" : "−"}${Math.round(Math.abs(rentDelta)).toLocaleString()}
-                        </div>
-                      )}
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--t1)", fontVariantNumeric: "tabular-nums" }}>
-                        {p.est ? `${p.est.toLocaleString()}` : "—"}
-                      </div>
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: "var(--t2)", fontVariantNumeric: "tabular-nums" }}>
-                        ${Math.round(saleAvg).toLocaleString()}
-                      </div>
-                      {p.est && (
-                        <div style={{
-                          fontSize: 10.5, fontWeight: 600, marginTop: 2, fontVariantNumeric: "tabular-nums",
-                          color: saleDelta >= 0 ? "var(--ok)" : "var(--danger)",
-                        }}>
-                          {saleDelta >= 0 ? "+" : "−"}${Math.round(Math.abs(saleDelta)).toLocaleString()}
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-              {/* Portfolio total row */}
-              {(() => {
-                const totalEst = properties.reduce((s, p) => s + (p.est || 0), 0);
-                const totalSaleAvg = properties.reduce((s, p) => s + (p.comps.sale.reduce((a, c) => a + c.price, 0) / p.comps.sale.length), 0);
-                const totalRent = properties.reduce((s, p) => {
-                  const lr = [...p.rent].reverse().find(v => v != null && v > 0);
-                  return s + (lr || 0);
-                }, 0);
-                const totalRentAvg = properties.reduce((s, p) => s + (p.comps.rent.reduce((a, c) => a + c.rent, 0) / p.comps.rent.length), 0);
-                return (
-                  <tr style={{ background: "var(--primary-tint)", borderTop: "2px solid var(--line2)" }}>
-                    <td style={{ padding: "18px 22px", fontSize: 14, fontWeight: 700, color: "var(--primary-deep)" }}>
-                      Portfolio total
-                    </td>
-                    <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--primary-deep)", fontVariantNumeric: "tabular-nums" }}>
-                        ${totalRent.toLocaleString()}
-                      </div>
-                      <div style={{ fontSize: 10.5, color: "var(--t3)", marginTop: 2 }}>/mo</div>
-                    </td>
-                    <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 14, fontWeight: 700, color: "var(--primary-deep)", fontVariantNumeric: "tabular-nums" }}>
-                        ${Math.round(totalRentAvg).toLocaleString()}
-                      </div>
-                    </td>
-                    <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: "var(--primary-deep)", letterSpacing: -0.3, fontVariantNumeric: "tabular-nums" }}>
-                        ${totalEst.toLocaleString()}
-                      </div>
-                      <div style={{ fontSize: 10.5, color: "var(--t3)", marginTop: 2, fontVariantNumeric: "tabular-nums" }}>
-                        ₡{Math.round(totalEst * 510).toLocaleString()}
-                      </div>
-                    </td>
-                    <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: "var(--primary-deep)", letterSpacing: -0.3, fontVariantNumeric: "tabular-nums" }}>
-                        ${Math.round(totalSaleAvg).toLocaleString()}
-                      </div>
-                      <div style={{ fontSize: 10.5, color: "var(--t3)", marginTop: 2, fontVariantNumeric: "tabular-nums" }}>
-                        ₡{Math.round(totalSaleAvg * 510).toLocaleString()}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })()}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Big combined stats */}
-      <section style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(5, 1fr)",
-        gap: 12,
-      }}>
-        <StatTile label="Rent collected" value={fmt$(total.rent)} crcValue={fmtCRC(total.rent)} sub="100% · income" tone="ok" />
-        <StatTile label="HOA"          value={fmt$(total.hoa)}  crcValue={fmtCRC(total.hoa)}  sub={pctOf(total.hoa, total.rent)} tone="danger" />
-        <StatTile label="Expenses"     value={fmt$(total.exp)}  crcValue={fmtCRC(total.exp)}  sub={pctOf(total.exp, total.rent)} tone="danger" />
-        <StatTile label="Piki Funds"   value={fmt$(total.piki)} crcValue={fmtCRC(total.piki)} sub={pctOf(total.piki, total.rent)} tone="danger" />
-        <StatTile label="Ricardo"      value={fmt$(total.ric)}  crcValue={fmtCRC(total.ric)}  sub={pctOf(total.ric, total.rent)} tone="danger" />
-      </section>
-
-      {/* Net + breakdown bar */}
-      <section style={{
-        background: "var(--bg2)",
-        borderRadius: 20,
-        padding: "24px 28px",
-        boxShadow: "var(--shadow-sm)",
-        border: "1px solid var(--line)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 18,
-      }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-          <div>
-            <div style={{
-              fontSize: 11, fontWeight: 600, color: "var(--t3)",
-              textTransform: "uppercase", letterSpacing: 0.6,
-            }}>Net YTD</div>
-            <div style={{
-              fontSize: 38, fontWeight: 700, marginTop: 6, lineHeight: 1,
-              letterSpacing: -0.8, fontVariantNumeric: "tabular-nums",
-              color: total.net >= 0 ? "var(--ok)" : "var(--danger)",
-            }}>{fmt$(total.net)}</div>
-            <div style={{ fontSize: 12, color: "var(--t3)", marginTop: 4, fontVariantNumeric: "tabular-nums" }}>
-              {fmtCRC(total.net)}
-            </div>
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 13, color: "var(--t2)", fontWeight: 500 }}>
-              {Math.round((total.net / total.rent) * 100)}% profit
-            </div>
-            <div style={{ fontSize: 11.5, color: "var(--t3)", marginTop: 4 }}>
-              {Math.round(((total.out) / total.rent) * 100)}% goes out
-            </div>
-          </div>
-        </div>
-        <BreakdownBar segments={[
-          { label: "HOA",      amt: total.hoa,  color: "#C76A56" },
-          { label: "Expenses", amt: total.exp,  color: "#D88656" },
-          { label: "Piki",     amt: total.piki, color: "#D9A24A" },
-          { label: "Ricardo",  amt: total.ric,  color: "#9C7A4A" },
-          { label: "Kept",     amt: Math.max(total.net, 0), color: "#2D6B5A" },
-        ]} total={total.rent} />
-      </section>
-
-      {/* Per-property breakdown table */}
-      <section>
-        <SectionHead title="By property" sub="YTD totals · click a row to drill in" />
-        <div style={{
-          background: "var(--bg2)",
-          borderRadius: 20,
-          boxShadow: "var(--shadow-sm)",
-          border: "1px solid var(--line)",
-          overflow: "hidden",
-        }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ background: "var(--bg3)" }}>
-                <th style={cellHead}>Property</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Rent in</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Out</th>
-                <th style={{ ...cellHead, textAlign: "right" }}>Net</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r, i) => {
-                const isLast = i === rows.length - 1;
-                return (
-                  <tr key={r.p.id}
-                    onClick={() => onPick(r.p.id)}
-                    style={{
-                      borderBottom: isLast ? "none" : "1px solid var(--line)",
-                      cursor: "pointer",
-                      transition: "background 120ms",
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = "var(--bg)"}
-                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}
-                  >
-                    <td style={{ padding: "16px 22px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <span style={{
-                          width: 10, height: 10, borderRadius: 50,
-                          background: `linear-gradient(135deg, oklch(0.72 0.10 ${r.p.hue}), oklch(0.52 0.12 ${r.p.hue}))`,
-                          flexShrink: 0,
-                        }}/>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 600, color: "var(--t1)" }}>{r.p.name}</div>
-                          <div style={{ fontSize: 11, color: "var(--t3)", marginTop: 2, fontWeight: 500 }}>
-                            Mgr {r.p.manager}{r.p.status === "for-sale" ? " · For sale" : ""}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <Money amount={r.rentYTD} sign="+" />
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <Money amount={r.outYTD} sign="-" negative />
-                    </td>
-                    <td style={{ padding: "16px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                      <Money amount={Math.abs(r.net)} sign={r.net >= 0 ? "+" : "-"} negative={r.net < 0} />
-                    </td>
-                  </tr>
-                );
-              })}
-              {/* Total row */}
-              <tr style={{ background: "var(--primary-tint)", borderTop: "2px solid var(--line2)" }}>
-                <td style={{ padding: "18px 22px", fontSize: 14, fontWeight: 700, color: "var(--primary-deep)" }}>
-                  Combined total
-                </td>
-                <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                  <Money amount={total.rent} sign="+" />
-                </td>
-                <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                  <Money amount={total.out} sign="-" negative />
-                </td>
-                <td style={{ padding: "18px 22px", textAlign: "right", whiteSpace: "nowrap" }}>
-                  <Money amount={Math.abs(total.net)} sign={total.net >= 0 ? "+" : "-"} negative={total.net < 0} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Combined comps summary */}
-      <PortfolioComps properties={properties} />
-
-      {/* Expense category breakdown */}
-      <section>
-        <SectionHead title="Expenses by category" sub="Combined YTD across all four units" />
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 12,
-        }}>
-          {catList.map(([cat, amt]) => (
-            <BucketCard key={cat} label={cat} amt={amt} />
-          ))}
-        </div>
-      </section>
-
-      {/* (legacy hidden) Expense buckets */}
-      <section style={{ display: "none" }}>
-        <SectionHead title="Where the money went" sub="Combined YTD · across all four units" />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
-          <BucketCard label="HOA"      amt={total.hoa} />
-          <BucketCard label="Expenses" amt={total.exp} />
-          <BucketCard label="Piki Funds" amt={total.piki} />
-          <BucketCard label="Ricardo"  amt={total.ric} />
-        </div>
-      </section>
-    </div>
-  );
+  document.getElementById('ph-val').textContent = fmt(profit);
+  document.getElementById('ph-rent').textContent = fmt(rent);
+  document.getElementById('ph-ricardo').textContent = neg(assess);
+  document.getElementById('ph-hoa').textContent = neg(hoa);
+  document.getElementById('ph-tax').textContent = neg(cat.tax);
+  document.getElementById('ph-repair').textContent = neg(cat.repair);
+  document.getElementById('ph-legal').textContent = neg(cat.legal);
+  document.getElementById('ph-sig').textContent = neg(cat.sig);
+  document.getElementById('ph-viat').textContent = neg(cat.viat);
+  document.getElementById('ph-other').textContent = neg(cat.other);
+  document.getElementById('ph-bank').textContent = neg(bank);
 }
 
-const cellHead = {
-  padding: "12px 22px",
-  fontSize: 11,
-  fontWeight: 600,
-  color: "var(--t3)",
-  textTransform: "uppercase",
-  letterSpacing: 0.6,
-  textAlign: "left",
-};
-
-function BucketCard({ label, amt }) {
-  return (
-    <div style={{
-      background: "var(--bg2)",
-      borderRadius: 16,
-      padding: "16px 20px",
-      boxShadow: "var(--shadow-sm)",
-      border: "1px solid var(--line)",
-    }}>
-      <div style={{
-        fontSize: 11, fontWeight: 600, color: "var(--t3)",
-        textTransform: "uppercase", letterSpacing: 0.6,
-      }}>{label}</div>
-      <div style={{
-        fontSize: 22, fontWeight: 700, color: "var(--danger)",
-        letterSpacing: -0.4, marginTop: 6, lineHeight: 1,
-        fontVariantNumeric: "tabular-nums",
-      }}>{fmt$(amt)}</div>
-      {amt > 0 && (
-        <div style={{ fontSize: 11, color: "var(--t3)", marginTop: 4, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>
-          {fmtCRC(amt)}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── App ────────────────────────────────────────────────────────
-function App() {
-  const { properties } = window.CASA_ANA_DATA;
-  const [active, setActive] = useState("overview");
-
-  const view = active === "overview"
-    ? <Overview onPick={setActive} />
-    : active.startsWith("contact:")
-      ? <ContactsSection filterId={active.split(":")[1]} />
-      : active === "contacts"
-        ? <ContactsSection />
-        : <PropertyPage p={properties.find(p => p.id === active)} />;
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "var(--bg)" }}>
-      <TopBar />
-      <main style={{
-        flex: 1,
-        overflowY: "auto",
-        padding: "40px 48px 60px",
-      }}>
-        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
-          {view}
-        </div>
-      </main>
-      <PropertyTabs active={active} onPick={setActive} />
-    </div>
-  );
-}
-
-// ─── Top bar ────────────────────────────────────────────────────────────
-function TopBar() {
-  return (
-    <header style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: "18px 32px",
-      borderBottom: "1px solid var(--line)",
-      background: "var(--bg2)",
-      flexShrink: 0,
-    }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
-        <div style={{
-          fontFamily: "var(--sans)", fontWeight: 700,
-          fontSize: 22, lineHeight: 1, color: "var(--primary)",
-          letterSpacing: -0.4,
-        }}>Nena Casa</div>
-        <div style={{
-          fontSize: 11, color: "var(--t3)", fontWeight: 500,
-          letterSpacing: 0.2,
-        }}>Costa Rica · 4 rentals</div>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{
-          width: 32, height: 32, borderRadius: 50,
-          background: "linear-gradient(135deg, #D88656, #C7A769)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "#fff", fontWeight: 700, fontSize: 13,
-        }}>A</div>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 600, color: "var(--t1)", lineHeight: 1.2 }}>Ana Augustine</div>
-          <div style={{ fontSize: 10.5, color: "var(--t3)", marginTop: 1 }}>Owner</div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-// ─── Bottom property tabs ─────────────────────────────────────
-function PropertyTabs({ active, onPick }) {
-  const { properties, contacts } = window.CASA_ANA_DATA;
-  const inContacts = active === "contacts" || active.startsWith("contact:");
-  return (
-    <nav style={{
-      borderTop: "1px solid var(--line)",
-      background: "var(--bg2)",
-      padding: "10px 12px",
-      display: "flex",
-      gap: 8,
-      flexShrink: 0,
-      boxShadow: "0 -2px 8px rgba(27,31,29,0.03)",
-      justifyContent: "center",
-      flexWrap: "wrap",
-    }}>
-      <button
-        onClick={() => onPick("overview")}
-        style={tabBtnStyle(active === "overview")}
-      >
-        <span style={{
-          width: 8, height: 8, borderRadius: 2,
-          background: "linear-gradient(135deg, var(--primary), var(--primary-deep))",
-        }}/>
-        Overview
-      </button>
-      {properties.map(p => {
-        const isActive = active === p.id;
-        return (
-          <button
-            key={p.id}
-            onClick={() => onPick(p.id)}
-            style={tabBtnStyle(isActive)}
-          >
-            <span style={{
-              width: 8, height: 8, borderRadius: 50,
-              background: `linear-gradient(135deg, oklch(0.72 0.10 ${p.hue}), oklch(0.52 0.12 ${p.hue}))`,
-              flexShrink: 0,
-            }}/>
-            {p.name}
-            {p.status === "for-sale" && (
-              <span style={{
-                fontSize: 9, fontWeight: 700, letterSpacing: 0.4,
-                color: "var(--accent)", background: "var(--accent-soft)",
-                padding: "1px 6px", borderRadius: 999,
-                textTransform: "uppercase", marginLeft: 2,
-              }}>For sale</span>
-            )}
-          </button>
-        );
-      })}
-      <button
-        onClick={() => onPick("contacts")}
-        style={tabBtnStyle(inContacts)}
-      >
-        <span style={{
-          width: 8, height: 8, borderRadius: 50,
-          background: "linear-gradient(135deg, #C7A769, #D88656)",
-        }}/>
-        Contacts
-      </button>
-    </nav>
-  );
-}
-
-function tabBtnStyle(isActive) {
-  return {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    padding: "10px 16px",
-    borderRadius: 999,
-    background: isActive ? "var(--primary-tint)" : "transparent",
-    color: isActive ? "var(--primary-deep)" : "var(--t2)",
-    fontWeight: isActive ? 600 : 500,
-    fontSize: 13.5,
-    cursor: "pointer",
-    transition: "background 120ms",
-    whiteSpace: "nowrap",
-    border: "none",
+function renderProperties() {
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const idxByLlc = {
+    'MF Manfredonia S.A':0, 'Espada de Fuego S.A':1, 'MJ Montijo INT S.A':2, 'Comercial IB Antioco':3
   };
+  const rent=[0,0,0,0], hoa=[0,0,0,0], opex=[0,0,0,0];
+  rentData.forEach(r => r.forEach((v,i) => rent[i] += v));
+  hoaData.forEach(r => r.forEach((v,i) => hoa[i] += v));
+  expenses.forEach(e => {
+    if (e.llc === 'All properties') { for (let i=0;i<4;i++) opex[i] += e.amt/4; }
+    else if (idxByLlc[e.llc] != null) opex[idxByLlc[e.llc]] += e.amt;
+  });
+  const ricardo = assessments.reduce((a,x) => a + x.amt, 0) / 4; // split evenly across 4 LLCs
+  const bank = bankFees.reduce((a,f) => a + f.a, 0) / 4;
+
+  document.getElementById('prop-cards').innerHTML = propMeta.map((p,i) => {
+    const costs = hoa[i] + ricardo + opex[i] + bank;
+    const profit = rent[i] - costs;
+    const cls = profit >= 0 ? 'green' : 'red';
+    const sign = profit >= 0 ? '' : '−';
+    return `<div class="prop-card ${p.c}">
+      <div class="prop-header">
+        <div><div class="prop-name">${p.name}</div><div class="prop-owner">Owner: ${p.owner}</div></div>
+        <span class="prop-badge ${p.badgeCls}">${p.badgeTxt}</span>
+      </div>
+      <div class="prop-stats">
+        <div class="prop-stat"><div class="ps-label">Rent collected</div><div class="ps-val">${fmt(rent[i])}</div></div>
+        <div class="prop-stat"><div class="ps-label">Total costs</div><div class="ps-val" style="color:var(--red)">${fmt(costs)}</div></div>
+      </div>
+      <div class="prop-profit">
+        <span class="pp-label">Profit YTD</span>
+        <span class="pp-val ${cls}">${sign}${fmt(Math.abs(profit))}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ─── Boot ───────────────────────────────────────────────────────
-const splash = document.getElementById("splash");
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-setTimeout(() => { if (splash) splash.style.display = "none"; }, 200);
+function renderAssessments() {
+  const total = assessments.reduce((a,x) => a + x.amt, 0);
+  document.getElementById('assess-list').innerHTML =
+    assessments.map(a => `<div class="exp-item"><div><div class="exp-note">${a.note}</div><div class="exp-meta">${a.date}</div></div><div class="exp-amt">-$${a.amt.toLocaleString()}</div></div>`).join('') +
+    `<div class="exp-total"><span class="exp-total-label">Total to Ricardo</span><span class="exp-total-val">-$${total.toLocaleString()}</span></div>`;
+}
 
+loadTasks();
+renderSummary();
+renderProperties();
+renderAssessments();
+renderBars();
+renderExpenses();
+renderBankFees();
+renderHOA();
+renderTasks();
 </script>
-
 </body>
 </html>
