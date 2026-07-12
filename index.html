@@ -226,9 +226,8 @@
           <div class="pl-row"><span class="lbl">HOA maintenance</span><span class="amt neg" id="ph-hoa">$0</span></div>
           <div class="pl-row"><span class="lbl">Property taxes</span><span class="amt neg" id="ph-tax">$0</span></div>
           <div class="pl-row"><span class="lbl">Repairs</span><span class="amt neg" id="ph-repair">$0</span></div>
-          <div class="pl-row"><span class="lbl">Legal — will (Salas)</span><span class="amt neg" id="ph-legal">$0</span></div>
           <div class="pl-row"><span class="lbl">Digital signatures</span><span class="amt neg" id="ph-sig">$0</span></div>
-          <div class="pl-row"><span class="lbl">Piki — viáticos</span><span class="amt neg" id="ph-viat">$0</span></div>
+          <div class="pl-row"><span class="lbl">Piki — viáticos & will</span><span class="amt neg" id="ph-viat">$0</span></div>
           <div class="pl-row"><span class="lbl">Other</span><span class="amt neg" id="ph-other">$0</span></div>
           <div class="pl-row"><span class="lbl">Bank fees</span><span class="amt neg" id="ph-bank">$0</span></div>
         </div>
@@ -522,13 +521,13 @@ function renderSummary() {
     const n = e.note.toLowerCase();
     if (n.includes('tax')) cat.tax += e.amt;
     else if (n.includes('repair') || n.includes('leak')) cat.repair += e.amt;
-    else if (n.includes('legal') || n.includes('lawyer')) cat.legal += e.amt;
+    else if (n.includes('legal') || n.includes('lawyer') || n.includes('will')) cat.viat += e.amt;
     else if (n.includes('signature')) cat.sig += e.amt;
     else if (n.includes('viátic') || n.includes('viatic')) cat.viat += e.amt;
     else cat.other += e.amt;
   });
 
-  const profit = rent - assess - hoa - cat.tax - cat.repair - cat.legal - cat.sig - cat.viat - cat.other - bank;
+  const profit = rent - assess - hoa - cat.tax - cat.repair - cat.sig - cat.viat - cat.other - bank;
 
   document.getElementById('ph-val').textContent = fmt(profit);
   document.getElementById('ph-rent').textContent = fmt(rent);
@@ -536,7 +535,6 @@ function renderSummary() {
   document.getElementById('ph-hoa').textContent = neg(hoa);
   document.getElementById('ph-tax').textContent = neg(cat.tax);
   document.getElementById('ph-repair').textContent = neg(cat.repair);
-  document.getElementById('ph-legal').textContent = neg(cat.legal);
   document.getElementById('ph-sig').textContent = neg(cat.sig);
   document.getElementById('ph-viat').textContent = neg(cat.viat);
   document.getElementById('ph-other').textContent = neg(cat.other);
