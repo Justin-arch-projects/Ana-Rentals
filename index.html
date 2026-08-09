@@ -107,6 +107,25 @@
   .prop-stat { background: var(--bg3); border-radius: 10px; padding: 8px 10px; }
   .ps-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
   .ps-val { font-size: 15px; font-weight: 500; color: var(--text); }
+  .prop-summary { cursor: pointer; }
+  .prop-detail-inline { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border2); }
+  .prop-card.open .prop-detail-inline { display: block; }
+  .prop-go { display: inline-block; transition: transform .2s; }
+  .prop-card.open .prop-go { transform: rotate(90deg); }
+  .det-sub { font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: .8px; font-weight: 600; margin: 12px 0 5px; }
+  .prop-summary:active { opacity: .75; }
+  .prop-go { font-size: 15px; color: var(--text3); margin-left: 8px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--text2); font-family: inherit; font-size: 13px; padding: 0 0 12px; cursor: pointer; }
+  .det-head { display: flex; align-items: flex-start; gap: 11px; margin-bottom: 14px; }
+  .det-swatch { width: 6px; align-self: stretch; min-height: 38px; border-radius: 4px; flex-shrink: 0; }
+  .det-name { font-family: 'DM Serif Display', serif; font-size: 21px; letter-spacing: -0.3px; }
+  .det-owner { font-size: 11px; color: var(--text3); margin-top: 3px; }
+  .mini-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .mini-row:last-child { border-bottom: none; }
+  .mini-row .m { font-size: 12px; color: var(--text2); }
+  .mini-row .v { font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .mini-row .v.zero { color: var(--amber); }
+  .det-box { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 4px 14px; margin-bottom: 6px; }
   .prop-profit { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--border); }
   .pp-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.6px; }
   .pp-val { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -206,9 +225,9 @@
     <div class="header-top">
       <div>
         <div class="header-title">Costa Rica Rentals</div>
-        <div class="header-sub">4 properties · Updated Jul 12, 2026</div>
+        <div class="header-sub">4 properties · Updated Aug 9, 2026</div>
       </div>
-      <div class="header-badge">Jul 2026</div>
+      <div class="header-badge">Aug 2026</div>
     </div>
   </div>
 
@@ -219,7 +238,7 @@
       <div class="profit-hero">
         <div class="ph-label">Running balance · Year to date</div>
         <div class="ph-val" id="ph-val">$0</div>
-        <div class="ph-sub">Oct 2025 – Jul 2026 · after every cost</div>
+        <div class="ph-sub">Oct 2025 – Aug 2026 · after every cost</div>
         <div class="pl">
           <div class="pl-row income"><span class="lbl">Rent collected</span><span class="amt pos" id="ph-rent">$0</span></div>
           <div class="pl-row"><span class="lbl">Ricardo (legal)</span><span class="amt neg" id="ph-ricardo">$0</span></div>
@@ -227,7 +246,7 @@
           <div class="pl-row"><span class="lbl">Property taxes</span><span class="amt neg" id="ph-tax">$0</span></div>
           <div class="pl-row"><span class="lbl">Repairs</span><span class="amt neg" id="ph-repair">$0</span></div>
           <div class="pl-row"><span class="lbl">Digital signatures</span><span class="amt neg" id="ph-sig">$0</span></div>
-          <div class="pl-row"><span class="lbl">Piki — viáticos & will</span><span class="amt neg" id="ph-viat">$0</span></div>
+          <div class="pl-row"><span class="lbl">Piki Funds (viáticos, will & rental money)</span><span class="amt neg" id="ph-viat">$0</span></div>
           <div class="pl-row"><span class="lbl">Other</span><span class="amt neg" id="ph-other">$0</span></div>
           <div class="pl-row"><span class="lbl">Bank fees</span><span class="amt neg" id="ph-bank">$0</span></div>
         </div>
@@ -237,13 +256,17 @@
       <div id="prop-cards"></div>
     </div>
 
+
     <!-- FINANCES -->
     <div id="s-finances" class="section">
-      <div class="sec-label">Monthly rent (Oct 2025 – Jul 2026)</div>
+      <div class="sec-label">Monthly rent (Oct 2025 – Aug 2026)</div>
       <div class="bar-chart" id="bar-chart"></div>
 
       <div class="sec-label">Expense log</div>
       <div class="exp-list" id="exp-list"></div>
+
+      <div class="sec-label">Piki Rental Money</div>
+      <div class="exp-list" id="piki-list"></div>
 
       <div class="sec-label">Bank fees</div>
       <div class="bf-detail">
@@ -324,68 +347,17 @@
 <script>
 const propNames = ['MF Manfredonia S.A','Espada de Fuego S.A','MJ Montijo INT S.A','Comercial IB Antioco','All'];
 const propColors = ['#2dd4a0','#4f9cf9','#a78bfa','#f5a623'];
-const months = ['Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26','Jul 26'];
-const rentData = [
-  [1500,1650,1450,0],
-  [1500,1650,1450,1500],
-  [1500,1650,1450,1500],
-  [1500,1650,1450,1400],
-  [1500,1650,1450,1000],
-  [1500,1650,1450,1500],
-  [1500,1650,1450,1500],
-  [0,1650,1400,1500],
-  [0,1650,1450,1500],
-  [0,0,1450,1500],
-];
-const hoaData = [
-  [447,515,515,447],
-  [445,516,516,445],
-  [458,531,531,458],
-  [450,521,521,450],
-  [455,527,527,455],
-  [473,548,548,473],
-  [483,558,558,482.53],
-  [568,600,568,600],
-  [563.88,596.92,563.88,596.92],
-  [575.28,608,575.28,608],
-];
-const bankFees = [
-  {m:'Oct 2025',a:7.25},{m:'Nov 2025',a:7.25},{m:'Dec 2025',a:7.25},
-  {m:'Jan 2026',a:7.25},{m:'Feb 2026',a:7.25},{m:'Mar 2026',a:7.25},
-  {m:'Apr 2026',a:7.25},{m:'May 2026',a:7.25},{m:'Jun 2026',a:7.25},
-  {m:'Jul 2026',a:7.25},
-];
+const months = ["Oct 25","Nov 25","Dec 25","Jan 26","Feb 26","Mar 26","Apr 26","May 26","Jun 26","Jul 26","Aug 26"];
+const rentData = [[1500,1650,1450,0],[1500,1650,1450,1500],[1500,1650,1450,1500],[1500,1650,1450,1400],[1500,1650,1450,1000],[1500,1650,1450,1500],[1500,1650,1450,1500],[0,1650,1400,1500],[0,1650,1450,1500],[0,1650,1450,1500],[0,0,1450,1050]];
+const hoaData = [[447,515,515,447],[445,516,516,445],[458,531,531,458],[450,521,521,450],[455,527,527,455],[473,548,548,473],[483,558,558,482.53],[568,600,568,600],[563.88,596.92,563.88,596.92],[575.28,608,948.28,608],[0,0,578,611]];
+const bankFees = [{"m":"Oct 2025","a":7.25},{"m":"Nov 2025","a":7.25},{"m":"Dec 2025","a":7.25},{"m":"Jan 2026","a":7.25},{"m":"Feb 2026","a":7.25},{"m":"Mar 2026","a":7.25},{"m":"Apr 2026","a":7.25},{"m":"May 2026","a":7.25},{"m":"Jun 2026","a":7.25},{"m":"Jul 2026","a":7.25},{"m":"Aug 2026","a":10.25},{"m":"Sep 2026","a":7.25}];
 const assessments = [
   {note:'Ricardo — all 4 units', date:'Mar 2026', amt:15000},
   {note:'Ricardo — all 4 units', date:'Apr 2026', amt:3125},
   {note:'Ricardo — all 4 units', date:'May 2026', amt:3125},
 ];
-const propMeta = [
-  {name:'MF Manfredonia S.A', owner:'Piki', c:'c1', badgeTxt:'Missing May–Jul', badgeCls:'badge-warn'},
-  {name:'Espada de Fuego S.A', owner:'Piki', c:'c2', badgeTxt:'Current', badgeCls:'badge-ok'},
-  {name:'MJ Montijo INT S.A', owner:'Nena', c:'c3', badgeTxt:'Current', badgeCls:'badge-ok'},
-  {name:'Comercial IB Antioco', owner:'Nena', c:'c4', badgeTxt:'Current', badgeCls:'badge-ok'},
-];
-const expenses = [
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:145,date:'Jun 2026'},
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:100,date:'May 2026'},
-  {note:'5th floor leaks repair',llc:'MJ Montijo INT S.A',amt:179.37,date:'May 2026'},
-  {note:'Electrical & laundry door repair',llc:'MJ Montijo INT S.A',amt:306,date:'May 2026'},
-  {note:'Paint, holes & electrical repair',llc:'MF Manfredonia S.A',amt:1800,date:'May 2026'},
-  {note:'Electrical repair',llc:'Comercial IB Antioco',amt:112,date:'May 2026'},
-  {note:'Digital signature — Nena',llc:'MJ Montijo INT S.A',amt:84.93,date:'Apr 4 2026'},
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:100,date:'Apr 14 2026'},
-  {note:'Bathroom leak repair',llc:'Espada de Fuego S.A',amt:155.38,date:'Apr 19 2026'},
-  {note:'Legal fees — Will (Guillermo Salas)',llc:'Espada de Fuego S.A',amt:300,date:'Apr 21 2026'},
-  {note:'Digital signature — Piki',llc:'Espada de Fuego S.A',amt:90,date:'Mar 2026'},
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:50,date:'Mar 19 2026'},
-  {note:'LLC taxes yearly — all 4',llc:'All properties',amt:1075,date:'Mar 12 2026'},
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:55,date:'Feb 21 2026'},
-  {note:'Toilet repair',llc:'MJ Montijo INT S.A',amt:291,date:'Feb 14 2026'},
-  {note:'Piki — Viáticos',llc:'Espada de Fuego S.A',amt:50,date:'Jan 23 2026'},
-  {note:'Municipality taxes — all 4',llc:'All properties',amt:850,date:'Jan 22 2026'},
-  {note:'Unknown — need to look up',llc:'Espada de Fuego S.A',amt:80.97,date:'2026'},
-];
+const propMeta = [{"name":"MF Manfredonia S.A","owner":"Piki","c":"c1","badgeTxt":"No rent since May","badgeCls":"badge-warn"},{"name":"Espada de Fuego S.A","owner":"Piki","c":"c2","badgeTxt":"Aug missing","badgeCls":"badge-warn"},{"name":"MJ Montijo INT S.A","owner":"Nena","c":"c3","badgeTxt":"Current","badgeCls":"badge-ok"},{"name":"Comercial IB Antioco","owner":"Nena","c":"c4","badgeTxt":"Aug short","badgeCls":"badge-warn"}];
+const expenses = [{"note":"Water leak to 5th floor","llc":"MJ Montijo INT S.A","amt":179,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":145,"date":"Jun 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"May 2026"},{"note":"5th floor leaks repair","llc":"MJ Montijo INT S.A","amt":179.37,"date":"May 2026"},{"note":"Electrical & laundry door repair","llc":"MJ Montijo INT S.A","amt":306,"date":"Jul 7 2026"},{"note":"Paint, holes, electrical & stains","llc":"MF Manfredonia S.A","amt":1800,"date":"May 2026"},{"note":"Electrical repair","llc":"Comercial IB Antioco","amt":112,"date":"May 2026"},{"note":"Digital signature — Nena","llc":"MJ Montijo INT S.A","amt":84.93,"date":"Apr 4 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Apr 14 2026"},{"note":"Bathroom leak repair","llc":"Espada de Fuego S.A","amt":155.38,"date":"Apr 19 2026"},{"note":"Legal fees — Will (Guillermo Salas)","llc":"Espada de Fuego S.A","amt":300,"date":"Apr 21 2026"},{"note":"Digital signature — Piki","llc":"Espada de Fuego S.A","amt":90,"date":"Mar 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Mar 19 2026"},{"note":"LLC taxes yearly — all 4","llc":"All properties","amt":1075,"date":"Mar 12 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":55,"date":"Feb 21 2026"},{"note":"Toilet repair","llc":"MJ Montijo INT S.A","amt":291,"date":"Feb 14 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Jan 23 2026"},{"note":"Municipality taxes — all 4","llc":"All properties","amt":850,"date":"Jan 22 2026"},{"note":"Unknown — need to look up","llc":"Espada de Fuego S.A","amt":80.97,"date":"2026"}];
 
 let tasks = [
   {id:1,title:'Confirm MF Manfredonia May–Jul rent — showing $0',prop:0,priority:'high',done:false,date:'Pending'},
@@ -428,10 +400,27 @@ function renderBankFees() {
     `<div class="bf-row total"><span class="m">Total · ${bankFees.length} months</span><span class="a">$${total.toFixed(2)}</span></div>`;
 }
 
+// Piki Rental Money — details to be filled in.
+// Everything here is charged to Espada de Fuego S.A.
+const pikiMoney = [{note:'Piki — rental money held', amt:1650, date:'Paid July 25'}];
+pikiMoney.forEach(p => expenses.push({note:'Piki Funds — ' + p.note, llc:'Espada de Fuego S.A', amt:Math.abs(p.amt), date:p.date, src:'piki'}));
+
+function renderPikiMoney() {
+  const el = document.getElementById('piki-list');
+  if (!pikiMoney.length) { el.innerHTML = '<div class="empty">Details coming — charged to Espada de Fuego S.A</div>'; return; }
+  const total = pikiMoney.reduce((a,p) => a + p.amt, 0);
+  el.innerHTML = pikiMoney.map(p => `<div class="exp-item">
+      <div style="flex:1"><div class="exp-note">${p.note}</div><div class="exp-meta">${p.date}</div></div>
+      <div class="exp-amt" style="color:${p.amt<0?'var(--red)':'var(--green)'}">${p.amt<0?'-':''}$${Math.abs(p.amt).toFixed(2)}</div>
+    </div>`).join('') +
+    `<div class="exp-total"><span class="exp-total-label">Total</span><span class="exp-total-val">$${total.toFixed(2)}</span></div>`;
+}
+
 function renderExpenses() {
-  const total = expenses.reduce((a,e) => a+e.amt, 0);
+  const list = expenses.filter(e => e.src !== 'piki');
+  const total = list.reduce((a,e) => a+e.amt, 0);
   document.getElementById('exp-list').innerHTML =
-    expenses.map(e => `<div class="exp-item">
+    list.map(e => `<div class="exp-item">
       <div style="flex:1"><div class="exp-note">${e.note}</div><div class="exp-meta">${e.llc} · ${e.date}</div></div>
       <div class="exp-amt">-$${e.amt.toFixed(2)}</div>
     </div>`).join('') +
@@ -520,10 +509,10 @@ function renderSummary() {
   expenses.forEach(e => {
     const n = e.note.toLowerCase();
     if (n.includes('tax')) cat.tax += e.amt;
-    else if (n.includes('repair') || n.includes('leak')) cat.repair += e.amt;
+    else if (n.includes('repair') || n.includes('leak') || n.includes('paint') || n.includes('electrical')) cat.repair += e.amt;
     else if (n.includes('legal') || n.includes('lawyer') || n.includes('will')) cat.viat += e.amt;
     else if (n.includes('signature')) cat.sig += e.amt;
-    else if (n.includes('viátic') || n.includes('viatic')) cat.viat += e.amt;
+    else if (n.includes('viátic') || n.includes('viatic') || n.includes('piki funds')) cat.viat += e.amt;
     else cat.other += e.amt;
   });
 
@@ -561,7 +550,8 @@ function renderProperties() {
     const profit = rent[i] - costs;
     const cls = profit >= 0 ? 'green' : 'red';
     const sign = profit >= 0 ? '' : '−';
-    return `<div class="prop-card ${p.c}">
+    return `<div class="prop-card ${p.c}" id="pc-${i}">
+      <div class="prop-summary" onclick="togglePropDetail(${i})">
       <div class="prop-header">
         <div><div class="prop-name">${p.name}</div><div class="prop-owner">Owner: ${p.owner}</div></div>
         <span class="prop-badge ${p.badgeCls}">${p.badgeTxt}</span>
@@ -571,11 +561,64 @@ function renderProperties() {
         <div class="prop-stat"><div class="ps-label">Total costs</div><div class="ps-val" style="color:var(--red)">${fmt(costs)}</div></div>
       </div>
       <div class="prop-profit">
-        <span class="pp-label">Profit YTD</span>
-        <span class="pp-val ${cls}">${sign}${fmt(Math.abs(profit))}</span>
+        <span class="pp-label">Balance YTD</span>
+        <span class="pp-val ${cls}">${sign}${fmt(Math.abs(profit))}<span class="prop-go">›</span></span>
       </div>
+      </div>
+      <div class="prop-detail-inline" id="pd-${i}"></div>
     </div>`;
   }).join('');
+}
+
+function togglePropDetail(i) {
+  const card = document.getElementById('pc-' + i);
+  if (card.classList.contains('open')) { card.classList.remove('open'); return; }
+  document.getElementById('pd-' + i).innerHTML = propDetailHTML(i);
+  card.classList.add('open');
+}
+
+function propBreakdown(i) {
+  const idxByLlc = {'MF Manfredonia S.A':0,'Espada de Fuego S.A':1,'MJ Montijo INT S.A':2,'Comercial IB Antioco':3};
+  const rent = rentData.reduce((a,r) => a + r[i], 0);
+  const hoa = hoaData.reduce((a,r) => a + r[i], 0);
+  const ricardo = assessments.reduce((a,x) => a + x.amt, 0) / 4;
+  const bank = bankFees.reduce((a,f) => a + f.a, 0) / 4;
+  const own = [], shared = [];
+  expenses.forEach(e => {
+    if (e.llc === 'All properties') shared.push(e);
+    else if (idxByLlc[e.llc] === i) own.push(e);
+  });
+  const ownTotal = own.reduce((a,e) => a + e.amt, 0);
+  const sharedTotal = shared.reduce((a,e) => a + e.amt, 0) / 4;
+  const costs = hoa + ricardo + ownTotal + sharedTotal + bank;
+  return {rent, hoa, ricardo, bank, own, shared, ownTotal, sharedTotal, costs, balance: rent - costs};
+}
+
+function propDetailHTML(i) {
+  const b = propBreakdown(i);
+  const fmt = n => '$' + Math.round(n).toLocaleString();
+  const neg = n => '\u2212' + fmt(n);
+  const monthRows = months.map((m, k) => {
+    const r = rentData[k][i], hv = hoaData[k][i];
+    return '<div class="mini-row"><span class="m">' + m + '</span><span class="v ' + (r===0?'zero':'') + '">' +
+      (r===0 ? 'No rent' : fmt(r)) +
+      '<span style="color:var(--text3);font-weight:400"> \u00b7 HOA ' + fmt(hv) + '</span></span></div>';
+  }).join('');
+  const expRows = b.own.length
+    ? b.own.map(e => '<div class="mini-row"><span class="m">' + e.note +
+        '<br><span style="color:var(--text3);font-size:10px">' + e.date + '</span></span>' +
+        '<span class="v">\u2212$' + e.amt.toFixed(2) + '</span></div>').join('')
+    : '<div class="mini-row"><span class="m" style="color:var(--text3)">None charged to this unit</span></div>';
+  return '<div class="pl" style="margin-top:0;border-top:none">' +
+      '<div class="pl-row income"><span class="lbl">Rent collected</span><span class="amt pos">' + fmt(b.rent) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">HOA maintenance</span><span class="amt neg">' + neg(b.hoa) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">Ricardo (\u00bc share)</span><span class="amt neg">' + neg(b.ricardo) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">Own expenses</span><span class="amt neg">' + neg(b.ownTotal) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">Shared taxes (\u00bc)</span><span class="amt neg">' + neg(b.sharedTotal) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">Bank fees (\u00bc)</span><span class="amt neg">' + neg(b.bank) + '</span></div>' +
+    '</div>' +
+    '<div class="det-sub">Rent &amp; HOA by month</div><div class="det-box">' + monthRows + '</div>' +
+    '<div class="det-sub">Expenses charged to this unit</div><div class="det-box">' + expRows + '</div>';
 }
 
 function renderAssessments() {
@@ -590,6 +633,7 @@ renderSummary();
 renderProperties();
 renderAssessments();
 renderBars();
+renderPikiMoney();
 renderExpenses();
 renderBankFees();
 renderHOA();
