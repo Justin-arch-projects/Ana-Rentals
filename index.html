@@ -225,9 +225,9 @@
     <div class="header-top">
       <div>
         <div class="header-title">Costa Rica Rentals</div>
-        <div class="header-sub">4 properties · Updated Aug 9, 2026</div>
+        <div class="header-sub">4 properties · Updated Sep 15, 2026</div>
       </div>
-      <div class="header-badge">Aug 2026</div>
+      <div class="header-badge">Sep 2026</div>
     </div>
   </div>
 
@@ -238,7 +238,7 @@
       <div class="profit-hero">
         <div class="ph-label">Running balance · Year to date</div>
         <div class="ph-val" id="ph-val">$0</div>
-        <div class="ph-sub">Oct 2025 – Aug 2026 · after every cost</div>
+        <div class="ph-sub">Oct 2025 – Sep 2026 · after every cost</div>
         <div class="pl">
           <div class="pl-row income"><span class="lbl">Rent collected</span><span class="amt pos" id="ph-rent">$0</span></div>
           <div class="pl-row"><span class="lbl">Ricardo (legal)</span><span class="amt neg" id="ph-ricardo">$0</span></div>
@@ -259,7 +259,7 @@
 
     <!-- FINANCES -->
     <div id="s-finances" class="section">
-      <div class="sec-label">Monthly rent (Oct 2025 – Aug 2026)</div>
+      <div class="sec-label">Monthly rent (Oct 2025 – Sep 2026)</div>
       <div class="bar-chart" id="bar-chart"></div>
 
       <div class="sec-label">Expense log</div>
@@ -285,10 +285,10 @@
     <div id="s-hoa" class="section">
       <div class="sec-label">Total HOA paid per LLC</div>
       <div class="hoa-grid">
-        <div class="hoa-card"><div class="hoa-name">MF Manfredonia S.A</div><div class="hoa-val">$4,343</div></div>
-        <div class="hoa-card"><div class="hoa-name">Espada de Fuego S.A</div><div class="hoa-val">$4,913</div></div>
-        <div class="hoa-card"><div class="hoa-name">MJ Montijo INT S.A</div><div class="hoa-val">$4,848</div></div>
-        <div class="hoa-card"><div class="hoa-name">Comercial IB Antioco</div><div class="hoa-val">$4,407</div></div>
+        <div class="hoa-card"><div class="hoa-name">MF Manfredonia S.A</div><div class="hoa-val">$4,918</div></div>
+        <div class="hoa-card"><div class="hoa-name">Espada de Fuego S.A</div><div class="hoa-val">$6,971</div></div>
+        <div class="hoa-card"><div class="hoa-name">MJ Montijo INT S.A</div><div class="hoa-val">$6,953</div></div>
+        <div class="hoa-card"><div class="hoa-name">Comercial IB Antioco</div><div class="hoa-val">$6,126</div></div>
       </div>
 
       <div class="sec-label">Monthly detail</div>
@@ -347,27 +347,34 @@
 <script>
 const propNames = ['MF Manfredonia S.A','Espada de Fuego S.A','MJ Montijo INT S.A','Comercial IB Antioco','All'];
 const propColors = ['#2dd4a0','#4f9cf9','#a78bfa','#f5a623'];
-const months = ["Oct 25","Nov 25","Dec 25","Jan 26","Feb 26","Mar 26","Apr 26","May 26","Jun 26","Jul 26","Aug 26"];
-const rentData = [[1500,1650,1450,0],[1500,1650,1450,1500],[1500,1650,1450,1500],[1500,1650,1450,1400],[1500,1650,1450,1000],[1500,1650,1450,1500],[1500,1650,1450,1500],[0,1650,1400,1500],[0,1650,1450,1500],[0,1650,1450,1500],[0,0,1450,1050]];
-const hoaData = [[447,515,515,447],[445,516,516,445],[458,531,531,458],[450,521,521,450],[455,527,527,455],[473,548,548,473],[483,558,558,482.53],[568,600,568,600],[563.88,596.92,563.88,596.92],[575.28,608,948.28,608],[0,0,578,611]];
+const months = ["Oct 25","Nov 25","Dec 25","Jan 26","Feb 26","Mar 26","Apr 26","May 26","Jun 26","Jul 26","Aug 26","Sep 26"];
+const rentData = [[1500,1650,1450,0],[1500,1650,1450,1500],[1500,1650,1450,1500],[1500,1650,1450,1400],[1500,1650,1450,1000],[1500,1650,1450,1500],[1500,1650,1450,1500],[0,1650,1400,1500],[0,1650,1450,1500],[0,1650,1450,1500],[0,1650,1050,1500],[0,0,1450,1500]];
+const hoaData = [[447,515,515,447],[445,516,516,445],[458,531,531,458],[450,521,521,450],[455,527,527,455],[473,548,548,473],[483,558,558,482.53],[568,600,568,600],[563.88,596.92,563.88,596.92],[575.28,608,948.28,608],[0,0,578,611],[0,1450,579,500]];
 const bankFees = [{"m":"Oct 2025","a":7.25},{"m":"Nov 2025","a":7.25},{"m":"Dec 2025","a":7.25},{"m":"Jan 2026","a":7.25},{"m":"Feb 2026","a":7.25},{"m":"Mar 2026","a":7.25},{"m":"Apr 2026","a":7.25},{"m":"May 2026","a":7.25},{"m":"Jun 2026","a":7.25},{"m":"Jul 2026","a":7.25},{"m":"Aug 2026","a":10.25},{"m":"Sep 2026","a":7.25}];
 const assessments = [
-  {note:'Ricardo — all 4 units', date:'Mar 2026', amt:15000},
-  {note:'Ricardo — all 4 units', date:'Apr 2026', amt:3125},
-  {note:'Ricardo — all 4 units', date:'May 2026', amt:3125},
+  {note:'Ricardo — all 4 units', llc:'All properties', date:'Mar 2026', amt:15000},
+  {note:'Ricardo — all 4 units', llc:'All properties', date:'Apr 2026', amt:3125},
+  {note:'Ricardo — all 4 units', llc:'All properties', date:'May 2026', amt:3125},
+  {note:'Ricardo — Montijo only', llc:'MJ Montijo INT S.A', date:'Aug 2026', amt:782},
+  {note:'Ricardo — Comercial only', llc:'Comercial IB Antioco', date:'Aug 2026', amt:782},
+  {note:'Ricardo — Montijo only', llc:'MJ Montijo INT S.A', date:'Sep 2026', amt:475},
+  {note:'Ricardo — Comercial only', llc:'Comercial IB Antioco', date:'Sep 2026', amt:475},
 ];
-const propMeta = [{"name":"MF Manfredonia S.A","owner":"Piki","c":"c1","badgeTxt":"No rent since May","badgeCls":"badge-warn"},{"name":"Espada de Fuego S.A","owner":"Piki","c":"c2","badgeTxt":"Aug missing","badgeCls":"badge-warn"},{"name":"MJ Montijo INT S.A","owner":"Nena","c":"c3","badgeTxt":"Current","badgeCls":"badge-ok"},{"name":"Comercial IB Antioco","owner":"Nena","c":"c4","badgeTxt":"Aug short","badgeCls":"badge-warn"}];
-const expenses = [{"note":"Water leak to 5th floor","llc":"MJ Montijo INT S.A","amt":179,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":145,"date":"Jun 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"May 2026"},{"note":"5th floor leaks repair","llc":"MJ Montijo INT S.A","amt":179.37,"date":"May 2026"},{"note":"Electrical & laundry door repair","llc":"MJ Montijo INT S.A","amt":306,"date":"Jul 7 2026"},{"note":"Paint, holes, electrical & stains","llc":"MF Manfredonia S.A","amt":1800,"date":"May 2026"},{"note":"Electrical repair","llc":"Comercial IB Antioco","amt":112,"date":"May 2026"},{"note":"Digital signature — Nena","llc":"MJ Montijo INT S.A","amt":84.93,"date":"Apr 4 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Apr 14 2026"},{"note":"Bathroom leak repair","llc":"Espada de Fuego S.A","amt":155.38,"date":"Apr 19 2026"},{"note":"Legal fees — Will (Guillermo Salas)","llc":"Espada de Fuego S.A","amt":300,"date":"Apr 21 2026"},{"note":"Digital signature — Piki","llc":"Espada de Fuego S.A","amt":90,"date":"Mar 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Mar 19 2026"},{"note":"LLC taxes yearly — all 4","llc":"All properties","amt":1075,"date":"Mar 12 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":55,"date":"Feb 21 2026"},{"note":"Toilet repair","llc":"MJ Montijo INT S.A","amt":291,"date":"Feb 14 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Jan 23 2026"},{"note":"Municipality taxes — all 4","llc":"All properties","amt":850,"date":"Jan 22 2026"},{"note":"Unknown — need to look up","llc":"Espada de Fuego S.A","amt":80.97,"date":"2026"}];
+const propMeta = [{"name":"MF Manfredonia S.A","owner":"Piki","c":"c1","badgeTxt":"No rent since May","badgeCls":"badge-warn"},{"name":"Espada de Fuego S.A","owner":"Piki","c":"c2","badgeTxt":"Sep missing","badgeCls":"badge-warn"},{"name":"MJ Montijo INT S.A","owner":"Nena","c":"c3","badgeTxt":"Aug short $400","badgeCls":"badge-warn"},{"name":"Comercial IB Antioco","owner":"Nena","c":"c4","badgeTxt":"Current","badgeCls":"badge-ok"}];
+const expenses = [{"note":"Masses","llc":"MJ Montijo INT S.A","amt":11,"date":"Sep 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":115,"date":"Aug 21 2026"},{"note":"Water leak to 5th floor","llc":"MJ Montijo INT S.A","amt":179,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Jul 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":145,"date":"Jun 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"May 2026"},{"note":"5th floor leaks repair","llc":"MJ Montijo INT S.A","amt":179.37,"date":"May 2026"},{"note":"Electrical & laundry door repair","llc":"MJ Montijo INT S.A","amt":306,"date":"Jul 7 2026"},{"note":"Paint, holes, electrical & stains","llc":"MF Manfredonia S.A","amt":1800,"date":"May 2026"},{"note":"Electrical repair","llc":"Comercial IB Antioco","amt":112,"date":"May 2026"},{"note":"Digital signature — Nena","llc":"MJ Montijo INT S.A","amt":84.93,"date":"Apr 4 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":100,"date":"Apr 14 2026"},{"note":"Bathroom leak repair","llc":"Espada de Fuego S.A","amt":155.38,"date":"Apr 19 2026"},{"note":"Legal fees — Will (Guillermo Salas)","llc":"Espada de Fuego S.A","amt":300,"date":"Apr 21 2026"},{"note":"Digital signature — Piki","llc":"Espada de Fuego S.A","amt":90,"date":"Mar 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Mar 19 2026"},{"note":"LLC taxes yearly — all 4","llc":"All properties","amt":1075,"date":"Mar 12 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":55,"date":"Feb 21 2026"},{"note":"Toilet repair","llc":"MJ Montijo INT S.A","amt":291,"date":"Feb 14 2026"},{"note":"Piki — Viáticos","llc":"Espada de Fuego S.A","amt":50,"date":"Jan 23 2026"},{"note":"Municipality taxes — all 4","llc":"All properties","amt":850,"date":"Jan 22 2026"},{"note":"Unknown — need to look up","llc":"Espada de Fuego S.A","amt":80.97,"date":"2026"}];
 
 let tasks = [
-  {id:1,title:'Confirm MF Manfredonia May–Jul rent — showing $0',prop:0,priority:'high',done:false,date:'Pending'},
+  {id:1,title:'Confirm MF Manfredonia rent — $0 since May (through Sep)',prop:0,priority:'high',done:false,date:'Pending'},
   {id:2,title:'Look up unknown $80.97 expense (Espada)',prop:1,priority:'high',done:false,date:'Pending'},
-  {id:3,title:'Review $1,800 paint/electrical repair (MF Manfredonia)',prop:0,priority:'med',done:false,date:'May 2026'},
-  {id:4,title:'Verify Comercial IB Feb rent gap — $500 short',prop:3,priority:'med',done:false,date:'Pending'},
-  {id:5,title:'Confirm Jul HOA payments sent — all 4 units',prop:4,priority:'med',done:false,date:'Jul 2026'},
-  {id:6,title:'File yearly LLC tax receipts',prop:4,priority:'low',done:true,date:'Mar 12 done'},
+  {id:3,title:'Confirm Espada Sep rent — not yet reported',prop:1,priority:'high',done:false,date:'Pending'},
+  {id:4,title:'Look into Montijo Aug rent shortfall — $1,050 vs. usual $1,450',prop:2,priority:'med',done:false,date:'Aug 2026'},
+  {id:5,title:'Clarify $1,450 "deposit" note under Espada HOA for Sep',prop:1,priority:'med',done:false,date:'Sep 2026'},
+  {id:6,title:'Review $1,800 paint/electrical repair (MF Manfredonia)',prop:0,priority:'med',done:false,date:'May 2026'},
+  {id:7,title:'Verify Comercial IB Feb rent gap — $500 short',prop:3,priority:'med',done:false,date:'Pending'},
+  {id:8,title:'Confirm Jul HOA payments sent — all 4 units',prop:4,priority:'med',done:false,date:'Jul 2026'},
+  {id:9,title:'File yearly LLC tax receipts',prop:4,priority:'low',done:true,date:'Mar 12 done'},
 ];
-let nextId = 7, taskFilter = 'all';
+let nextId = 10, taskFilter = 'all';
 
 function switchTab(name, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -530,23 +537,29 @@ function renderSummary() {
   document.getElementById('ph-bank').textContent = neg(bank);
 }
 
+const idxByLlc = {
+  'MF Manfredonia S.A':0, 'Espada de Fuego S.A':1, 'MJ Montijo INT S.A':2, 'Comercial IB Antioco':3
+};
+function splitByLlc(items) {
+  const out = [0,0,0,0];
+  items.forEach(e => {
+    if (e.llc === 'All properties') { for (let i=0;i<4;i++) out[i] += e.amt/4; }
+    else if (idxByLlc[e.llc] != null) out[idxByLlc[e.llc]] += e.amt;
+  });
+  return out;
+}
+
 function renderProperties() {
   const fmt = n => '$' + Math.round(n).toLocaleString();
-  const idxByLlc = {
-    'MF Manfredonia S.A':0, 'Espada de Fuego S.A':1, 'MJ Montijo INT S.A':2, 'Comercial IB Antioco':3
-  };
-  const rent=[0,0,0,0], hoa=[0,0,0,0], opex=[0,0,0,0];
+  const rent=[0,0,0,0], hoa=[0,0,0,0];
   rentData.forEach(r => r.forEach((v,i) => rent[i] += v));
   hoaData.forEach(r => r.forEach((v,i) => hoa[i] += v));
-  expenses.forEach(e => {
-    if (e.llc === 'All properties') { for (let i=0;i<4;i++) opex[i] += e.amt/4; }
-    else if (idxByLlc[e.llc] != null) opex[idxByLlc[e.llc]] += e.amt;
-  });
-  const ricardo = assessments.reduce((a,x) => a + x.amt, 0) / 4; // split evenly across 4 LLCs
+  const opex = splitByLlc(expenses);
+  const ricardoByProp = splitByLlc(assessments);
   const bank = bankFees.reduce((a,f) => a + f.a, 0) / 4;
 
   document.getElementById('prop-cards').innerHTML = propMeta.map((p,i) => {
-    const costs = hoa[i] + ricardo + opex[i] + bank;
+    const costs = hoa[i] + ricardoByProp[i] + opex[i] + bank;
     const profit = rent[i] - costs;
     const cls = profit >= 0 ? 'green' : 'red';
     const sign = profit >= 0 ? '' : '−';
@@ -578,10 +591,9 @@ function togglePropDetail(i) {
 }
 
 function propBreakdown(i) {
-  const idxByLlc = {'MF Manfredonia S.A':0,'Espada de Fuego S.A':1,'MJ Montijo INT S.A':2,'Comercial IB Antioco':3};
   const rent = rentData.reduce((a,r) => a + r[i], 0);
   const hoa = hoaData.reduce((a,r) => a + r[i], 0);
-  const ricardo = assessments.reduce((a,x) => a + x.amt, 0) / 4;
+  const ricardo = splitByLlc(assessments)[i];
   const bank = bankFees.reduce((a,f) => a + f.a, 0) / 4;
   const own = [], shared = [];
   expenses.forEach(e => {
@@ -612,7 +624,7 @@ function propDetailHTML(i) {
   return '<div class="pl" style="margin-top:0;border-top:none">' +
       '<div class="pl-row income"><span class="lbl">Rent collected</span><span class="amt pos">' + fmt(b.rent) + '</span></div>' +
       '<div class="pl-row"><span class="lbl">HOA maintenance</span><span class="amt neg">' + neg(b.hoa) + '</span></div>' +
-      '<div class="pl-row"><span class="lbl">Ricardo (\u00bc share)</span><span class="amt neg">' + neg(b.ricardo) + '</span></div>' +
+      '<div class="pl-row"><span class="lbl">Ricardo (legal)</span><span class="amt neg">' + neg(b.ricardo) + '</span></div>' +
       '<div class="pl-row"><span class="lbl">Own expenses</span><span class="amt neg">' + neg(b.ownTotal) + '</span></div>' +
       '<div class="pl-row"><span class="lbl">Shared taxes (\u00bc)</span><span class="amt neg">' + neg(b.sharedTotal) + '</span></div>' +
       '<div class="pl-row"><span class="lbl">Bank fees (\u00bc)</span><span class="amt neg">' + neg(b.bank) + '</span></div>' +
